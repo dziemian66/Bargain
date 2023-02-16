@@ -1,5 +1,4 @@
-﻿using Bargain.Domain.Utils;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bargain.Web.Models
@@ -11,17 +10,16 @@ namespace Bargain.Web.Models
         public decimal Price { get; set; }
         [DisplayName("Earlier price")]
         public decimal EarlierPrice { get; set; }
-        public ItemCategory Category { get; set; }
+        
         public int Likes { get; set; }
-        public string Link { get; set; }
+        public string Url { get; set; }
         public string Description { get; set; }
 
-        public Item(int id, string name, decimal price, ItemCategory category)
+        public Item(int id, string name, decimal price)
         {
             Id = id;
             Name = name;
-            Price = price;
-            Category= category;
+            Price = price; 
         }
     }
 }
