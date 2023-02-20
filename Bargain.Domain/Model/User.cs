@@ -15,6 +15,6 @@ namespace Bargain.Domain.Model
         public Address Address { get; set; }
         public virtual ICollection<Item> AddedItems { get; set; }
         public ICollection<UserRating> UserRatings { get; set; }
-
+        public bool IsActive { get; set; }
     }
 }

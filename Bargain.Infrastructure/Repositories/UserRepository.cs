@@ -32,7 +32,7 @@ namespace Bargain.Infrastructure.Repositories
         }
         public User GetUserById(int id)
         {
-            var user = _context.Users.FirstOrDefault(i => i.Id == id);
+            var user = _context.Users.FirstOrDefault(i => i.Id == id && i.IsActive == true);
             return user;
         }
     }

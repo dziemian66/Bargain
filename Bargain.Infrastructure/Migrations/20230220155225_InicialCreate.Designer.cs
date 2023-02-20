@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bargain.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230216125927_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230220155225_InicialCreate")]
+    partial class InicialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,17 +35,12 @@ namespace Bargain.Infrastructure.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserRef")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("UserRef")
                         .IsUnique();
@@ -61,11 +56,16 @@ namespace Bargain.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
                 });
@@ -108,6 +108,9 @@ namespace Bargain.Infrastructure.Migrations
                     b.Property<decimal>("EarlierPrice")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("LocalBargain")
                         .HasColumnType("bit");
@@ -218,6 +221,9 @@ namespace Bargain.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -448,14 +454,8 @@ namespace Bargain.Infrastructure.Migrations
             modelBuilder.Entity("Bargain.Domain.Model.Addresses.Address", b =>
                 {
                     b.HasOne("Bargain.Domain.Model.Addresses.City", "City")
-                        .WithMany("Addresses")
+                        .WithMany("UserAddresses")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bargain.Domain.Model.Addresses.Country", "Country")
-                        .WithMany("Address")
-                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -467,9 +467,18 @@ namespace Bargain.Infrastructure.Migrations
 
                     b.Navigation("City");
 
-                    b.Navigation("Country");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bargain.Domain.Model.Addresses.City", b =>
+                {
+                    b.HasOne("Bargain.Domain.Model.Addresses.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Item", b =>
@@ -588,14 +597,14 @@ namespace Bargain.Infrastructure.Migrations
 
             modelBuilder.Entity("Bargain.Domain.Model.Addresses.City", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Items");
+
+                    b.Navigation("UserAddresses");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Addresses.Country", b =>
                 {
-                    b.Navigation("Address");
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Item", b =>

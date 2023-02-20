@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Bargain.Infrastructure.Repositories
 {
@@ -36,35 +35,29 @@ namespace Bargain.Infrastructure.Repositories
             var item = _context.Items.FirstOrDefault(i => i.Id == id);
             return item;
         }
-        public IQueryable<Item> GetItemsByTypeId(int typeId) 
+
+        public IQueryable<Item> GetActiveItemsByTypeId(int typeId)
         {
-            var items = _context.Items.Where(i => i.TypeId== typeId);
+            var items = _context.Items.Where(i => i.TypeId == typeId && i.IsActive == true);
             return items;
         }
-        public IQueryable<Item> GetItemsByShopId(int shopeId)
+
+        public IQueryable<Item> GetActiveItemsByShopId(int shopeId)
         {
-            var items = _context.Items.Where(i => i.ShopId == shopeId);
+            var items = _context.Items.Where(i => i.ShopId == shopeId && i.IsActive == true);
             return items;
         }
-        public IQueryable<Item> GetItemsByCityId(int cityId)
+
+        public IQueryable<Item> GetActiveItemsByCityId(int cityId)
         {
-            var items = _context.Items.Where(i => i.CityId == cityId);
+            var items = _context.Items.Where(i => i.CityId == cityId && i.IsActive == true);
             return items;
         }
-        public IQueryable<Item> GetAllItems()
+
+        public IQueryable<Item> GetAllActiveItems()
         {
-            var items = _context.Items;
+            var items = _context.Items.Where(x => x.IsActive == true);
             return items;
-        }
-        public IQueryable<Domain.Model.Type> GetAllTypes()
-        {
-            var types = _context.Types;
-            return types;
-        }
-        public IQueryable<Shop> GetAllShops()
-        {
-            var shops = _context.Shops;
-            return shops;
         }
     }
 }
