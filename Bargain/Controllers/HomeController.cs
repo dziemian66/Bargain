@@ -1,5 +1,4 @@
 ﻿using Bargain.Models;
-using Bargain.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using static System.Net.WebRequestMethods;
@@ -9,31 +8,33 @@ namespace Bargain.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public List<Item> Items;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
-
-        public IActionResult ViewListOfNewItems()
+        public IActionResult Index()
         {
-            return View(Items);
+            return View();
         }
+        //public IActionResult ViewListOfNewItems()
+        //{
+        //    return View(Items);
+        //}
 
-        [Route("TopRated")]
-        public IActionResult ViewListOfTopRatedItems()
-        {
-            var items = Items.Where(i => i.Likes >= 200)
-                .OrderByDescending(i => i.Likes);
-            return View(items);
-        }
+        //[Route("TopRated")]
+        //public IActionResult ViewListOfTopRatedItems()
+        //{
+        //    var items = Items.Where(i => i.Likes >= 200)
+        //        .OrderByDescending(i => i.Likes);
+        //    return View(items);
+        //}
 
-        [Route("Home/Details/{id:int?}")]
-        public IActionResult ViewItemDetails(int id)
-        {
-            var item = Items.FirstOrDefault(i => i.Id == id);
-            return View(item);
-        }
+        //[Route("Home/Details/{id:int?}")]
+        //public IActionResult ViewItemDetails(int id)
+        //{
+        //    var item = Items.FirstOrDefault(i => i.Id == id);
+        //    return View(item);
+        //}
 
         public IActionResult Privacy()
         {

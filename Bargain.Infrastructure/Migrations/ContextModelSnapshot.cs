@@ -30,7 +30,7 @@ namespace Bargain.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CityId")
+                    b.Property<int>("ProvinceId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserRef")
@@ -38,34 +38,12 @@ namespace Bargain.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("ProvinceId");
 
                     b.HasIndex("UserRef")
                         .IsUnique();
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("Bargain.Domain.Model.Addresses.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Addresses.Country", b =>
@@ -85,6 +63,28 @@ namespace Bargain.Infrastructure.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Bargain.Domain.Model.Addresses.Province", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Provinces");
+                });
+
             modelBuilder.Entity("Bargain.Domain.Model.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -96,14 +96,11 @@ namespace Bargain.Infrastructure.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("EarlierPrice")
+                    b.Property<decimal?>("EarlierPrice")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
@@ -121,6 +118,9 @@ namespace Bargain.Infrastructure.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
 
@@ -135,13 +135,35 @@ namespace Bargain.Infrastructure.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("ProvinceId");
 
                     b.HasIndex("ShopId");
 
                     b.HasIndex("TypeId");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("Bargain.Domain.Model.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Rating", b =>
@@ -217,7 +239,6 @@ namespace Bargain.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -451,9 +472,9 @@ namespace Bargain.Infrastructure.Migrations
 
             modelBuilder.Entity("Bargain.Domain.Model.Addresses.Address", b =>
                 {
-                    b.HasOne("Bargain.Domain.Model.Addresses.City", "City")
+                    b.HasOne("Bargain.Domain.Model.Addresses.Province", "Province")
                         .WithMany("UserAddresses")
-                        .HasForeignKey("CityId")
+                        .HasForeignKey("ProvinceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -463,15 +484,15 @@ namespace Bargain.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("City");
+                    b.Navigation("Province");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Bargain.Domain.Model.Addresses.City", b =>
+            modelBuilder.Entity("Bargain.Domain.Model.Addresses.Province", b =>
                 {
                     b.HasOne("Bargain.Domain.Model.Addresses.Country", "Country")
-                        .WithMany("Cities")
+                        .WithMany("Provinces")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -487,11 +508,9 @@ namespace Bargain.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bargain.Domain.Model.Addresses.City", "City")
+                    b.HasOne("Bargain.Domain.Model.Addresses.Province", "Province")
                         .WithMany("Items")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProvinceId");
 
                     b.HasOne("Bargain.Domain.Model.Shop", "Shop")
                         .WithMany("Items")
@@ -507,11 +526,22 @@ namespace Bargain.Infrastructure.Migrations
 
                     b.Navigation("Author");
 
-                    b.Navigation("City");
+                    b.Navigation("Province");
 
                     b.Navigation("Shop");
 
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("Bargain.Domain.Model.Photo", b =>
+                {
+                    b.HasOne("Bargain.Domain.Model.Item", "Item")
+                        .WithMany("Photos")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Rating", b =>
@@ -593,20 +623,22 @@ namespace Bargain.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bargain.Domain.Model.Addresses.City", b =>
+            modelBuilder.Entity("Bargain.Domain.Model.Addresses.Country", b =>
+                {
+                    b.Navigation("Provinces");
+                });
+
+            modelBuilder.Entity("Bargain.Domain.Model.Addresses.Province", b =>
                 {
                     b.Navigation("Items");
 
                     b.Navigation("UserAddresses");
                 });
 
-            modelBuilder.Entity("Bargain.Domain.Model.Addresses.Country", b =>
-                {
-                    b.Navigation("Cities");
-                });
-
             modelBuilder.Entity("Bargain.Domain.Model.Item", b =>
                 {
+                    b.Navigation("Photos");
+
                     b.Navigation("Rating")
                         .IsRequired();
                 });

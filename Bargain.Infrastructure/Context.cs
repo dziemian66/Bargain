@@ -14,9 +14,10 @@ namespace Bargain.Infrastructure
     public class Context : IdentityDbContext
     {
         public DbSet<Address> Addresses { get; set; }
-        public DbSet<City> Cities { get; set; }
+        public DbSet<Province> Provinces { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Type> Types { get; set; }
@@ -51,6 +52,8 @@ namespace Bargain.Infrastructure
             builder.Entity<Item>().Property(a => a.Price).HasPrecision(10,2);
             builder.Entity<Item>().Property(a => a.EarlierPrice).HasPrecision(10,2);
             base.OnModelCreating(builder);
+
+          //  builder.Entity<Item>().Ignore(a => a.Files);
         }
     }
 }

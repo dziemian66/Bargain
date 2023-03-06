@@ -1,6 +1,13 @@
+using AutoMapper;
+using Bargain.Application;
+using Bargain.Application.Interfaces;
+using Bargain.Application.Services;
+using Bargain.Domain.Interfaces;
 using Bargain.Infrastructure;
+using Bargain.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +16,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<Context>();
@@ -38,7 +48,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=ViewListOfNewItems}/{id?}");
+    pattern: "{controller=Home}/{action=Index}");
 
 app.MapRazorPages();
 

@@ -1,0 +1,93 @@
+﻿@model Bargain.Application.ViewModels.Item.NewItemVm
+
+@{
+    ViewData["Title"] = "AddItem";
+}
+
+<h1>AddItem</h1>
+
+<h4>NewItemVm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddItem" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input asp-for="Id" type="hidden" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+                <div class="form-group">
+                    <label asp-for="Files" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="Files" accept="image/*" class="custom-file-input" />
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <span asp-validation-for="Files" class="text-danger"></span>
+             </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EarlierPrice" class="control-label"></label>
+                <input asp-for="EarlierPrice" class="form-control" />
+                <span asp-validation-for="EarlierPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeId" class="control-label"></label>
+                <input asp-for="TypeId" class="form-control" />
+                <span asp-validation-for="TypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShopId" class="control-label"></label>
+                <input asp-for="ShopId" class="form-control" />
+                <span asp-validation-for="ShopId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="LocalBargain" /> @Html.DisplayNameFor(model => model.LocalBargain)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProvinceId" class="control-label"></label>
+                <input asp-for="ProvinceId" class="form-control" />
+                <span asp-validation-for="ProvinceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+        <script>
+            // Add the following code if you want the name of the file appear on select
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+        </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,50 @@
+﻿@model Bargain.Application.ViewModels.Item.ListItemToListVm
+
+@{
+    ViewData["Title"] = "Index";
+}
+<body style="background-color:#ebdbf0">
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+          <a href="https://allegro.pl/" style="text-decoration:none">
+                <div class="rounded" style="background-color: white; margin-block:10px">
+                <div class="row">
+                        <div class="col-md-1" style="width:160px;margin-block:10px; margin-left:10px">
+                            <img src="~/Uploads/@item.Photos.ElementAt(0).FileName" class="rounded" height="160" width="160" asp-append-version="true" />
+                    </div>
+                    <div class="col-md-2" style="width:500px; margin-block:10px; margin-left:10px">
+                        <div style="margin-top:30px">
+                            <div>
+                                <b><font size ="4" color="black" face="Comic Sans MS"> @Html.DisplayFor(modelItem => item.Name) </font></b>
+                            </div>
+                            <div>
+                                <b><font size ="6" color="#800080" face="Comic Sans MS"> @Html.DisplayFor(modelItem => item.Price) </font></b> 
+                            </div>
+                            <div>
+                                <font size="3" color="#808080" face="Comic Sans MS"><del> @Html.DisplayFor(modelItem => item.EarlierPrice) </del></font>
+                            </div>  
+                        </div>
+                          
+                    </div>
+                </div>
+                <div style="width:160px">
+                        
+                </div>
+                <div >
+                    
+                        
+                </div>
+            </div>
+          </a>
+       }
+    </tbody>
+</table>
+</body>

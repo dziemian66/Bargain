@@ -96,7 +96,7 @@ namespace Bargain.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -211,7 +211,7 @@ namespace Bargain.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cities",
+                name: "Provinces",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -221,9 +221,9 @@ namespace Bargain.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.PrimaryKey("PK_Provinces", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cities_Countries_CountryId",
+                        name: "FK_Provinces_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "Id",
@@ -236,16 +236,16 @@ namespace Bargain.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CityId = table.Column<int>(type: "int", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: false),
                     UserRef = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
+                        name: "FK_Addresses_Provinces_ProvinceId",
+                        column: x => x.ProvinceId,
+                        principalTable: "Provinces",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -265,24 +265,23 @@ namespace Bargain.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    EarlierPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    EarlierPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: true),
                     TypeId = table.Column<int>(type: "int", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShopId = table.Column<int>(type: "int", nullable: false),
                     LocalBargain = table.Column<bool>(type: "bit", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Items_Provinces_ProvinceId",
+                        column: x => x.ProvinceId,
+                        principalTable: "Provinces",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Items_Shops_ShopId",
                         column: x => x.ShopId,
@@ -299,6 +298,26 @@ namespace Bargain.Infrastructure.Migrations
                         name: "FK_Items_Users_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ItemId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -346,9 +365,9 @@ namespace Bargain.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_CityId",
+                name: "IX_Addresses_ProvinceId",
                 table: "Addresses",
-                column: "CityId");
+                column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserRef",
@@ -396,19 +415,14 @@ namespace Bargain.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_CountryId",
-                table: "Cities",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Items_AuthorId",
                 table: "Items",
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_CityId",
+                name: "IX_Items_ProvinceId",
                 table: "Items",
-                column: "CityId");
+                column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_ShopId",
@@ -419,6 +433,16 @@ namespace Bargain.Infrastructure.Migrations
                 name: "IX_Items_TypeId",
                 table: "Items",
                 column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Photos_ItemId",
+                table: "Photos",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Provinces_CountryId",
+                table: "Provinces",
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_ItemRef",
@@ -453,6 +477,9 @@ namespace Bargain.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Photos");
+
+            migrationBuilder.DropTable(
                 name: "UserRating");
 
             migrationBuilder.DropTable(
@@ -468,7 +495,7 @@ namespace Bargain.Infrastructure.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Cities");
+                name: "Provinces");
 
             migrationBuilder.DropTable(
                 name: "Shops");

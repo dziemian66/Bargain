@@ -1,5 +1,6 @@
 ﻿using Bargain.Domain.Interfaces;
 using Bargain.Domain.Model;
+using Bargain.Domain.Model.Addresses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,31 @@ namespace Bargain.Infrastructure.Repositories
                 _context.SaveChanges();
             }
         }
-        public int AddItem(Item item)
+        public async Task<int> AddItem(Item item)
         {
             _context.Items.Add(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return item.Id;
         }
-        public Item GetItemById(int id)
+        public Item GetActiveItemById(int id)
         {
-            var item = _context.Items.FirstOrDefault(i => i.Id == id);
+            var item = _context.Items.FirstOrDefault(i => i.Id == id && i.IsActive == true);
             return item;
         }
-
+        public async Task UpdateItem(Item item)
+        {
+            _context.Attach(item);
+            _context.Entry(item).Property("Name").IsModified = true;
+            _context.Entry(item).Property("Photos").IsModified = true;
+            _context.Entry(item).Property("Description").IsModified = true;
+            _context.Entry(item).Property("Price").IsModified= true;
+            _context.Entry(item).Property("EarlierPrice").IsModified= true;
+            _context.Entry(item).Property("TypeId").IsModified= true;
+            _context.Entry(item).Property("ShopId").IsModified= true;
+            _context.Entry(item).Property("LocalBargain").IsModified= true;
+            _context.Entry(item).Property("ProvinceId").IsModified= true;
+            await _context.SaveChangesAsync();
+        }
         public IQueryable<Item> GetActiveItemsByTypeId(int typeId)
         {
             var items = _context.Items.Where(i => i.TypeId == typeId && i.IsActive == true);
@@ -48,9 +62,9 @@ namespace Bargain.Infrastructure.Repositories
             return items;
         }
 
-        public IQueryable<Item> GetActiveItemsByCityId(int cityId)
+        public IQueryable<Item> GetActiveItemsByProvinceId(int provinceId)
         {
-            var items = _context.Items.Where(i => i.CityId == cityId && i.IsActive == true);
+            var items = _context.Items.Where(i => i.ProvinceId == provinceId && i.IsActive == true);
             return items;
         }
 
@@ -59,5 +73,7 @@ namespace Bargain.Infrastructure.Repositories
             var items = _context.Items.Where(x => x.IsActive == true);
             return items;
         }
+
+
     }
 }

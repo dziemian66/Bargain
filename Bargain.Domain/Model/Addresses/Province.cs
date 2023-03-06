@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bargain.Domain.Model.Addresses
 {
-    public class City
+    public class Province
     {
         public int Id { get; set; }
         public string Name { get; set; }

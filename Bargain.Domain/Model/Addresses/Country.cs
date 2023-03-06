@@ -10,6 +10,6 @@ namespace Bargain.Domain.Model.Addresses
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<City> Cities { get; set; }
+        public virtual ICollection<Province> Provinces { get; set; }
     }
 }
