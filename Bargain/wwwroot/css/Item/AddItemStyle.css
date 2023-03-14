@@ -1,0 +1,274 @@
+﻿body {
+    background-color:#5a4172;
+}
+.nameField {
+    padding: 2px 11px 1px 11px;
+    margin-left: 14px;
+    width: 60%;
+    background-color: #FDFCFD;
+    font-family: Verdana;
+    font-size: 18px;
+    color: #6E5B7C;
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+
+.nameField:focus {
+    border: hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.linkField {
+    padding: 2px 11px 1px 11px;
+    margin-left: 14px;
+    width: 60%;
+    background-color: #FDFCFD;
+    font-family: Verdana;
+    font-size: 18px;
+    color: #6E5B7C;
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+.linkField:focus {
+    border:hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.priceField {
+    padding: 2px 11px 1px 11px;
+    margin-left: 14px;
+    width: 60%;
+    background-color: #FDFCFD;
+    font-family: Verdana;
+    font-size: 18px;
+    color: #6E5B7C;
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+.priceField:focus {
+    border:hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.description {
+    padding: 2px 11px 1px 11px;
+    margin-left: 14px;
+    width: 80%;
+    background-color: #FDFCFD;
+    font-family: Verdana;
+    font-size: 18px;
+    color: #6E5B7C;
+    min-height: 200px;
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+.description:focus {
+    border:hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.selectList {
+    padding: 4px 5px 3px 5px;
+    width: 99%;
+    background-color: #FDFCFD;
+    font-family: Verdana;
+    font-size: 17px;
+    color: #6E5B7C;
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+.selectList:focus {
+    border: hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.dateField {
+    padding: 4px 11px 3px 11px;
+    width: 99%;
+    background-color: #FDFCFD;
+    font-family: Verdana;
+    font-size: 17px;
+    color: #6E5B7C;
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+.dateField:focus {
+    border: hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.checkbox {
+    outline: none;
+    border: 1px solid #BBAFC6;
+    border-radius: 4px;
+}
+.checkbox:focus {
+    border: hidden;
+    border: 4px solid #BBAFC6;
+    border-radius: 3px;
+}
+.createButton {
+    padding: 7px 11px 3px 11px;
+    font-family: Verdana;
+    font-size: 15px;
+    font-weight: bold;
+    min-height: 56px;
+    min-width: 200px;
+    color: #FDFCFD;
+    background-color: #38234D;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+}
+.createButton:hover {
+    background-color: #FDFCFD;
+    color: #38234D;
+    border: 3px solid #38234D;
+}
+.validation {
+    font-family: Verdana;
+    font-size: 15px;
+    color: #6B6B6B;
+}
+#main {
+    margin-block: 50px;
+    border-radius: 10px;
+}
+#partName {
+    margin-top: 18px;
+    margin-left: 30px;
+    font-size: 24px;
+    color: #38234D;
+    font-family: Verdana;
+}
+#fieldName {
+    font-family: Verdana;
+    margin-top: 6px;
+    margin-bottom: 1px;
+    margin-left: 18px;
+    font-size: 18px;
+    color: #38234D;
+}
+#biggerFieldName {
+    margin-top: 6px;
+    margin-left: 16px;
+    font-size: 20px;
+    color: #38234D;
+    font-family: Verdana;
+}
+#commend {
+    margin-left: 16px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #6B6B6B;
+}
+#validationfield {
+    font-size: 14px;
+    margin-left: 8px;
+    margin-right: 5px;
+}
+#basicInfoPart {
+    overflow: auto;
+    background-color: white;
+    border-radius: 10px;
+}
+#bagrainName{
+    margin-left: 22px;
+    margin-right: 22px;
+}
+#bagrainUrl {
+    margin-left: 22px;
+    margin-right: 22px;
+}
+#bargainDescription {
+    margin-left: 22px;
+    margin-right: 22px;
+}
+#bargainGraphic {
+    margin-top: 25px;
+    margin-bottom: 40px;
+    margin-left: 22px;
+    margin-right: 22px;
+}
+#fileField {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 13px;
+    color: #38234D;
+    font-family: Verdana;
+}
+#pricePart {
+    margin-top: 16px;
+    overflow: auto;
+    background-color: white;
+    border-radius: 10px;
+}
+#bargainPrice {
+    margin-bottom: 40px;
+    margin-left: 10px;
+    margin-right: 40px;
+}
+#detailPart {
+    margin-top: 16px;
+    overflow: auto;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 350px;
+}
+#detailRow1 {
+    margin-left: 12px;
+    margin-right: 22px;
+}
+#selectList {
+    color: #38234D;
+    font-family: Verdana;
+    margin-left: 13px;
+}
+#detailRow2 {
+    margin-top: 7px;
+    margin-left: 12px;
+    margin-right: 22px;
+}
+#bargainDate {
+    color: #38234D;
+    font-family: Verdana;
+    margin-left: 13px;
+}
+#detailRow3 {
+    margin-top: 20px;
+    margin-left: 12px;
+    margin-right: 32px;
+}
+#bargainIsLocal {
+    margin-right: 20px;
+    color: #38234D;
+    font-size:18px;
+    font-family: Verdana;
+    margin-left: 30px;
+}
+#bargainProvince {
+    margin-bottom: 40px;
+    margin-left: 13px;
+    color: #38234D;
+    font-family: Verdana;
+    display: none;
+    max-width: 400px;
+}
+#createPart {
+    margin-top: 16px;
+    overflow: auto;
+    background-color: white;
+    border-radius: 10px;
+    min-height: 80px;
+}
+#bargainCreate {
+    float:right;
+    margin-top:11px;
+    margin-right:30px;
+}

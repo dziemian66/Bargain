@@ -53,11 +53,16 @@ namespace Bargain.Application.Services
             var itemVm = _mapper.Map<NewItemVm>(item);
             return itemVm;
         }
-
         public async Task UpdateItem(NewItemVm model)
         {
             var item = _mapper.Map<Item>(model);
             await _itemRepository.UpdateItem(item);
+        }
+        public List<TypeToSelectListVm> GetAllTypes()
+        {
+            var types = _itemRepository.GetAllTypes()
+                .ProjectTo<TypeToSelectListVm>(_mapper.ConfigurationProvider).ToList();
+            return types;
         }
     }
 }

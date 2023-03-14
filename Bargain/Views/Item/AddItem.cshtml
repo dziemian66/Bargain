@@ -1,93 +1,198 @@
 ﻿@model Bargain.Application.ViewModels.Item.NewItemVm
-
 @{
-    ViewData["Title"] = "AddItem";
+    ViewData["Title"] = "Stwórz okazję";
 }
 
-<h1>AddItem</h1>
+<head>
+    <html lang="pl">
+    <link href="@Url.Content("~/css/Item/AddItemStyle.css")" rel="stylesheet" type="text/css"/> 
+</head>
 
-<h4>NewItemVm</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddItem" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+<body>
+    <h1><b><font color="white">Stwórz okazję</font></b></h1>
+  
+    <form asp-action="AddItem" enctype="multipart/form-data">
+    <div class="container" id="main" >
+        <div  id="basicInfoPart">
+            <div>
                 <input asp-for="Id" type="hidden" />
-
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-
-                <div class="form-group">
-                    <label asp-for="Files" class="control-label"></label>
-                <div class="custom-file">
-                    <input asp-for="Files" accept="image/*" class="custom-file-input" />
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+            <div id="partName">
+                Podstawowe informacje
+            </div>
+            <div id="bagrainName">
+                <div id="fieldName">
+                    Tytuł
                 </div>
-                <span asp-validation-for="Files" class="text-danger"></span>
-             </div>
+                <div>
+                    <input asp-for="Name" class="nameField" />     
+                </div>
+                <div id="validationfield">
+                    <span asp-validation-for="Name" class="validation"></span>
+                </div>
+            </div>
+            <div id="bagrainUrl">
+                <div id="fieldName">
+                   Link
+                </div>
+                <div>
+                    <input asp-for="Url" class="linkField" type="url"/>
+                </div>
+                <div id="validationfield">
+                     <span asp-validation-for="Url" class="validation"></span>
+                </div>
+            </div>
+            <div id="bargainDescription">
+                <div id="fieldName">
+                   Opis
+                </div>
+                <div>
+                    <textarea name="Description" class="description"></textarea>  
+                </div>
+                <div id="validationfield">
+                    <span asp-validation-for="Description" class="validation"></span>
+                </div>
+            </div>
+            <div id="bargainGraphic">
+                <div id="biggerFieldName">
+                    Galeria obrazków
+                </div>
+                <div id="commend">
+                    Pierwszy obrazek będzie obrazkiem głównym
+                </div>
+                <div id="fileField">
+                    <input asp-for="Files" accept="image/*" class="custom-file-input" />
+                </div>
+                <div id="validationfield">
+                     <span asp-validation-for="Files" class="validation"></span>
+                </div>
+            </div>
+        </div>
+        <div id="pricePart">
+            <div id="partName">
+                Cena
+            </div>
+            <div class="row" id="bargainPrice">
+                <div class="col">
+                    <div id="fieldName">
+                        Najniższa cena
+                    </div>
+                    <div>
+                        <input asp-for="Price" class="priceField" />
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="Price" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        Poprzednia cena
+                    </div>
+                    <div>
+                        <input asp-for="EarlierPrice" class="priceField" />
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="EarlierPrice" class="validation"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="detailPart">
+            <div id="partName"> 
+                Szczegółowe informacje
+            </div>
+            <div class="row" id="detailRow1">
+                <div class="col">
+                    <div id="fieldName">
+                        Kategoria
+                    </div>
+                    <div id="selectList">
+                        @Html.DropDownListFor(x => Model.TypeId, new SelectList(Model.TypeSelectList, "Id", "Name"), htmlAttributes:new {@class ="selectList"})
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="TypeId" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        Sklep
+                    </div>
+                    <div id="selectList">
+                        @Html.DropDownListFor(x => Model.ShopId, new SelectList(Model.ShopSelectList, "Id", "Name"), htmlAttributes:new {@class ="selectList"})  
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="detailRow2">
+                <div class="col">
+                    <div id="fieldName">
+                        Data rozpoczęcia
+                    </div>
+                    <div id="bargainDate">
+                        <input asp-for="BeginningOfPriceBargain" class="dateField" />
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="BeginningOfPriceBargain" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        Data zakończenia
+                    </div>
+                    <div id="bargainDate">
+                        <input asp-for="EndOfPriceBargain" class="dateField" />
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="EndOfPriceBargain" class="validation"></span>
+                    </div>
+                </div>
+            </div>
 
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="row" id="detailRow3">
+                <div id="bargainIsLocal">
+                        <input class="checkbox" id="isLocalCheck" asp-for="LocalBargain" onclick="ShowProvinces()"/> Okazja lokalna
+                </div>
+                <div id="bargainProvince">
+                    @Html.DropDownListFor(x => Model.ProvinceId, new SelectList(Model.ProvinceSelectList, "Id", "Name"),"Wybierz lokalizację" , htmlAttributes:new {@class ="selectList"})
+                    <div id="validationfield">
+                        <span asp-validation-for="ProvinceId" class="validation"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EarlierPrice" class="control-label"></label>
-                <input asp-for="EarlierPrice" class="form-control" />
-                <span asp-validation-for="EarlierPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
-                <input asp-for="TypeId" class="form-control" />
-                <span asp-validation-for="TypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShopId" class="control-label"></label>
-                <input asp-for="ShopId" class="form-control" />
-                <span asp-validation-for="ShopId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="LocalBargain" /> @Html.DisplayNameFor(model => model.LocalBargain)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProvinceId" class="control-label"></label>
-                <input asp-for="ProvinceId" class="form-control" />
-                <span asp-validation-for="ProvinceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+         </div>  
+         <div id="createPart" >
+             <div id="bargainCreate" class="col">
+                 <input type="submit" value="Stwórz okazję" class="createButton" />
+             </div>  
+         </div>
+    </div> 
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    </form>
+
+</body></html>
 
 @section Scripts {
-        <script>
-            // Add the following code if you want the name of the file appear on select
+       <script>
+            // Code if you want the name of the file appear on select
             $(".custom-file-input").on("change", function () {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
-        </script>
+       </script>
+       <script>
+           // Hide provinces list when bargain isn't local
+           function ShowProvinces()
+           {
+               var provinces = document.getElementById("bargainProvince")
+               var isLocal = document.getElementById("isLocalCheck")
+               if(isLocal.checked == true)
+               {
+                   provinces.style.display = "block";
+               }
+               else
+               {
+                   provinces.style.display = "none";
+               }
+           }
+       </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

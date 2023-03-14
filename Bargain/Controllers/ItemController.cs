@@ -12,11 +12,15 @@ namespace Bargain.Web.Controllers
     {
         private readonly IItemService _itemService;
         private readonly IPhotoService _photoService;
+        private readonly IAddressService _addressesService;
+        private readonly IShopService _shopService;
         private readonly IWebHostEnvironment _environment;
-        public ItemController(IItemService itemService, IPhotoService photoService, IWebHostEnvironment environment)
+        public ItemController(IItemService itemService, IPhotoService photoService, IAddressService addressesService, IShopService shopService, IWebHostEnvironment environment)
         {
             _itemService = itemService;
             _photoService = photoService;
+            _addressesService = addressesService;
+            _shopService = shopService;
             _environment = environment;
         }
         
@@ -37,7 +41,12 @@ namespace Bargain.Web.Controllers
         [HttpGet]
         public IActionResult AddItem()
         {
-            return View(new NewItemVm());
+            var item = new NewItemVm();
+            item.CountrySelectList = _addressesService.GetAllCountry();
+            item.ProvinceSelectList = _addressesService.GetAllProvinces();
+            item.ShopSelectList = _shopService.GetAllShops();
+            item.TypeSelectList = _itemService.GetAllTypes();
+            return View(item);
         }
 
         [ValidateAntiForgeryToken]

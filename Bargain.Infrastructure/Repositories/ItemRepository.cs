@@ -73,7 +73,11 @@ namespace Bargain.Infrastructure.Repositories
             var items = _context.Items.Where(x => x.IsActive == true);
             return items;
         }
-
+        public IQueryable<Bargain.Domain.Model.Type> GetAllTypes()
+        {
+            var types = _context.Types;
+            return types;
+        }
 
     }
 }

@@ -14,5 +14,6 @@ namespace Bargain.Application.Interfaces
         ListItemToListVm GetAllItems(int totalPages, int currentPage, string searchString);
         NewItemVm GetEditItem(int itemId);
         Task UpdateItem(NewItemVm model);
+        public List<TypeToSelectListVm> GetAllTypes();
     }
 }

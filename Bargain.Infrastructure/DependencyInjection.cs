@@ -15,6 +15,8 @@ namespace Bargain.Infrastructure
         {
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IPhotoRepository, PhotoRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<IShopRepository, ShopRepository>();
             return services;
         }
     }

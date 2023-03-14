@@ -12,5 +12,6 @@ namespace Bargain.Domain.Interfaces
         public IQueryable<Item> GetActiveItemsByProvinceId(int provinceId);
         public IQueryable<Item> GetAllActiveItems();
         public Task UpdateItem(Item item);
+        public IQueryable<Bargain.Domain.Model.Type> GetAllTypes();
     }
 }

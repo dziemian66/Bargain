@@ -17,6 +17,8 @@ namespace Bargain.Application
         {
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IShopService, ShopService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
