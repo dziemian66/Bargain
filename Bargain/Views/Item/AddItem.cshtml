@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Stwórz okazję";
 }
-
 <head>
     <html lang="pl">
     <link href="@Url.Content("~/css/Item/AddItemStyle.css")" rel="stylesheet" type="text/css"/> 
@@ -94,6 +93,15 @@
                     <div id="validationfield">
                         <span asp-validation-for="EarlierPrice" class="validation"></span>
                     </div>
+                </div>
+                <div id="fieldName">
+                    Cena dostawy
+                    </div>
+                        <div>
+                            <input asp-for="DeliveryPrice" class="deliveryPriceField" />
+                        </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="DeliveryPrice" class="validation"></span>
                 </div>
             </div>
         </div>

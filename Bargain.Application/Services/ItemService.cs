@@ -33,6 +33,7 @@ namespace Bargain.Application.Services
 
         public ListItemToListVm GetAllItems(int totalPages, int currentPage, string searchString)
         {
+            
             var items = _itemRepository.GetAllActiveItems().Where(i => i.Name.StartsWith(searchString))
                 .ProjectTo<ItemToListVm>(_mapper.ConfigurationProvider).ToList();
             var itemsToShow = items.Skip(totalPages * (currentPage - 1)).Take(totalPages).ToList(); ;

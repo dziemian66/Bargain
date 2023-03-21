@@ -37,6 +37,19 @@ namespace Bargain.Web.Controllers
             var model = _itemService.GetAllItems(totalPages, currentPage, searchString);
             return View(model);
         }
+        public IActionResult AllItems()
+        {
+            var model = _itemService.GetAllItems(4, 1, "");
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult AllItems(int totalPages, int currentPage, string searchString)
+        {
+            if (currentPage < 1) currentPage = 1;
+            if (searchString is null) searchString = String.Empty;
+            var model = _itemService.GetAllItems(totalPages, currentPage, searchString);
+            return View(model);
+        }
 
         [HttpGet]
         public IActionResult AddItem()
@@ -48,7 +61,6 @@ namespace Bargain.Web.Controllers
             item.TypeSelectList = _itemService.GetAllTypes();
             return View(item);
         }
-
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> AddItem(NewItemVm item)

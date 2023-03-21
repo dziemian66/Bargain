@@ -4,6 +4,7 @@ using Bargain.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bargain.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230321084312_AddedDeliveryPrice")]
+    partial class AddedDeliveryPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,6 +111,7 @@ namespace Bargain.Infrastructure.Migrations
                         .HasColumnType("nvarchar(600)");
 
                     b.Property<decimal?>("EarlierPrice")
+                        .IsRequired()
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 

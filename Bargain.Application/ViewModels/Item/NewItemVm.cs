@@ -22,8 +22,8 @@ namespace Bargain.Application.ViewModels.Item
         public string Description { get; set; }
         [Required]
         public decimal Price { get; set; }
-        [Required]
         public decimal? EarlierPrice { get; set; }
+        public decimal? DeliveryPrice { get; set; }
         [Required]
         public int TypeId { get; set; }
         [NotMapped]

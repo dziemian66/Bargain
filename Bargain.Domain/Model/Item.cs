@@ -19,16 +19,16 @@ namespace Bargain.Domain.Model
         public virtual ICollection<Photo> Photos { get; set; }
         [Required, StringLength(600, MinimumLength = 20)]
         public string Description { get; set; }
-        [Required, DataType(DataType.Currency)]
+        [Required]
         public decimal Price { get; set; }
-        [Required, DataType(DataType.Currency)]
         public decimal? EarlierPrice { get; set; }
+        public decimal? DeliveryPrice { get; set; }
         public int TypeId { get; set; }
         public virtual Type Type { get; set; }
         [Required]
         public int AuthorId { get; set; }
         public virtual User Author { get; set; }
-        public Rating Rating { get; set; }
+        public Rating? Rating { get; set; }
         [Required, DataType(DataType.Url)]
         public string Url { get; set; }
         public int ShopId { get; set; }

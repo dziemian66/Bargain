@@ -51,6 +51,7 @@ namespace Bargain.Infrastructure
 
             builder.Entity<Item>().Property(a => a.Price).HasPrecision(10,2);
             builder.Entity<Item>().Property(a => a.EarlierPrice).HasPrecision(10,2);
+            builder.Entity<Item>().Property(a => a.DeliveryPrice).HasPrecision(4,2);
             base.OnModelCreating(builder);
 
           //  builder.Entity<Item>().Ignore(a => a.Files);
