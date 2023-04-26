@@ -1,31 +1,111 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
+<!DOCTYPE html>
+<html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Bargain</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,-25" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Bargain.styles.css" asp-append-version="true" />
+    <link href="@Url.Content("~/css/LayoutStyle.css")" rel="stylesheet" type="text/css"/> 
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/logo-dark.ico")">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bargain</a>
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-dark novbar-bargain-web border-bottom box-shadow mb-4">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <object data="img/logo-light.svg" class="logo-link"> </object>
+                    <span class="web-name">
+                        Bargain
+                    </span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-controller="Home" asp-action="Index" role="button">
+                                Najnowsze
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" href="#" role="button"> 
+                                Najlepsze
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" data-wrap="" data-toggle="dropdown" role="button">
+                                Kategorie
+                            </a>
+                            <div class="dropdown-menu nav-category-manu" aria-labelledby="submenu">
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="3">
+                                    <i class="bi bi-lamp"></i>
+                                    Dom
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="5">
+                                    <i class="bi bi-balloon"></i>
+                                    Dziecko
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="1">
+                                    <i class="bi bi-cpu"></i>
+                                    Elektronika
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="12">
+                                    <i class="bi bi-palette-fill"></i>
+                                    Kolekcje i sztuka
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="8">
+                                    <i class="bi bi-camera-reels"></i>
+                                    Kultura i rozrywka
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="2">
+                                    <i class="bi bi-sunglasses"></i>
+                                    Moda
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="10">
+                                    <i class="bi bi-car-front-fill"></i>
+                                    Motoryzacja
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="11">
+                                    <i class="bi bi-buildings-fill"></i>
+                                    Nieruchomości
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="14">
+                                    <i class="bi bi-tools"></i>
+                                    Ogród i majsterkowanie
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="9">
+                                    <i class="bi bi-bicycle"></i>
+                                    Sport i turystyka
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="4">
+                                    <i class="bi bi-basket2-fill"></i>
+                                    Supermarket
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="6">
+                                    <i class="bi bi-stars"></i>
+                                    Uroda
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="13">
+                                    <i class="bi bi-card-heading"></i>
+                                    Usługi i subskrypcje
+                                </a>
+                                <a class="dropdown-item text-light nav-category-item" asp-action="ListOfItemForSingleType" asp-controller="Home" asp-route-typeid="7">
+                                    <i class="bi bi-capsule"></i>
+                                    Zdrowie
+                                </a>
+                            </div>
                         </li>
                     </ul>
+                    <partial name="_AddItemPartial" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -39,9 +119,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Bargain - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <span id="footer-style">
+                Copyright &copy; 2023 Bargain. Wszelkie prawa zastrzeżone
+            </span>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

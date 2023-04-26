@@ -13,5 +13,6 @@ namespace Bargain.Domain.Interfaces
         public IQueryable<Item> GetAllActiveItems();
         public Task UpdateItem(Item item);
         public IQueryable<Bargain.Domain.Model.Type> GetAllTypes();
+        public Bargain.Domain.Model.Type GetTypeDetails(int typeid);
     }
 }

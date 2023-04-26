@@ -2,14 +2,21 @@ using AutoMapper;
 using Bargain.Application;
 using Bargain.Application.Interfaces;
 using Bargain.Application.Services;
+using Bargain.Application.ViewModels.Item;
 using Bargain.Domain.Interfaces;
 using Bargain.Infrastructure;
 using Bargain.Infrastructure.Repositories;
+using Bargain.Web;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Reflection;
+using System.Web.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +34,25 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<Context>();
 builder.Services.AddControllersWithViews();
 
+//Add Manual Fluent Validation for NewItemValidation
+builder.Services.AddValidatorsFromAssemblyContaining<NewItemValidation>();
+
+//Add Manual Fluent Validation
+//builder.Services.AddFluentValidation(conf =>
+//{
+//    conf.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
+//    conf.AutomaticValidationEnabled = false;
+//});
+
+//Use Polish culture to website
+var cultureInfo = new CultureInfo("pl-PL");
+cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+
 var app = builder.Build();
+
+//TEST culture
+app.UseRequestLocalization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace Bargain.Application.ViewModels.Item
 {
-    public class TypeToSelectListVm : IMapFrom<Domain.Model.Type>
+    public class TypeDetailsVm: IMapFrom<Bargain.Domain.Model.Type>
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string IconFile { get; set; }
+
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Model.Type, TypeToSelectListVm>();
+            profile.CreateMap<Bargain.Domain.Model.Type, TypeDetailsVm>();
         }
     }
 }

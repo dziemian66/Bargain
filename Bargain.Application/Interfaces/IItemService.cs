@@ -11,9 +11,11 @@ namespace Bargain.Application.Interfaces
     public interface IItemService
     {
         Task<int> AddItem(NewItemVm item, int authorId = 1);
-        ListItemToListVm GetAllItems(int totalPages, int currentPage, string searchString);
+        ListItemToListVm GetAllItems(int pageSize, int pageNo);
+        ListItemToListForSingleTypeVm GetItemsByType(int typeid, int pageSize, int pageNo);
+        DetailedItemVm GetDetailedItemById(int id);
         NewItemVm GetEditItem(int itemId);
         Task UpdateItem(NewItemVm model);
-        public List<TypeToSelectListVm> GetAllTypes();
+        List<TypeToSelectListVm> GetAllTypes();
     }
 }

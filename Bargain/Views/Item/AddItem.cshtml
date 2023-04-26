@@ -1,17 +1,18 @@
 ﻿@model Bargain.Application.ViewModels.Item.NewItemVm
 @{
     ViewData["Title"] = "Stwórz okazję";
+    string test;
 }
+<html lang="pl">
 <head>
-    <html lang="pl">
     <link href="@Url.Content("~/css/Item/AddItemStyle.css")" rel="stylesheet" type="text/css"/> 
 </head>
 
 <body>
-    <h1><b><font color="white">Stwórz okazję</font></b></h1>
-  
+    <h1><b><font>Stwórz okazję</font></b></h1>
+  <div asp-validation-summary="ModelOnly"></div>
     <form asp-action="AddItem" enctype="multipart/form-data">
-    <div class="container" id="main" >
+    <div class="container my-4" id="main" >
         <div  id="basicInfoPart">
             <div>
                 <input asp-for="Id" type="hidden" />
@@ -21,10 +22,10 @@
             </div>
             <div id="bagrainName">
                 <div id="fieldName">
-                    Tytuł
+                    Tytuł  <span class="isRequired"> (Obowiązkowe) </span>
                 </div>
                 <div>
-                    <input asp-for="Name" class="nameField" />     
+                    <input asp-for="Name" class="nameField" autoComplete='none' placeholder="Nazwij swoją okazję np. poprzez nazwę marki i modelu"/>     
                 </div>
                 <div id="validationfield">
                     <span asp-validation-for="Name" class="validation"></span>
@@ -35,7 +36,7 @@
                    Link
                 </div>
                 <div>
-                    <input asp-for="Url" class="linkField" type="url"/>
+                    <input asp-for="Url" class="linkField" autoComplete='none' placeholder="Wklej link do okazji https://www.LinkDoOkazji.pl"/>
                 </div>
                 <div id="validationfield">
                      <span asp-validation-for="Url" class="validation"></span>
@@ -43,10 +44,10 @@
             </div>
             <div id="bargainDescription">
                 <div id="fieldName">
-                   Opis
+                   Opis <span class="isRequired"> (Obowiązkowe) </span>
                 </div>
                 <div>
-                    <textarea name="Description" class="description"></textarea>  
+                    <textarea asp-for="Description" class="description" placeholder="Opis powinien zawierać od 50 do 800 znaków"></textarea>  
                 </div>
                 <div id="validationfield">
                     <span asp-validation-for="Description" class="validation"></span>
@@ -54,13 +55,13 @@
             </div>
             <div id="bargainGraphic">
                 <div id="biggerFieldName">
-                    Galeria obrazków
+                    Galeria obrazków<span class="isRequired"> (Obowiązkowe) </span>
                 </div>
                 <div id="commend">
                     Pierwszy obrazek będzie obrazkiem głównym
                 </div>
                 <div id="fileField">
-                    <input asp-for="Files" accept="image/*" class="custom-file-input" />
+                    <input asp-for="Files" accept="image/jpg, image/jpeg, image/png" id="custom-file-input" />
                 </div>
                 <div id="validationfield">
                      <span asp-validation-for="Files" class="validation"></span>
@@ -74,10 +75,11 @@
             <div class="row" id="bargainPrice">
                 <div class="col">
                     <div id="fieldName">
-                        Najniższa cena
+                        Cena promocji <span class="isRequired"> (Obowiązkowe) </span>
                     </div>
-                    <div>
-                        <input asp-for="Price" class="priceField" />
+                    <div class="input-box-price">
+                        <span class="prefix">zł</span>
+                        <input asp-for="Price" id="input-price" autoComplete='none' type="number" min="0" step="0.01"/>
                     </div>
                     <div id="validationfield">
                         <span asp-validation-for="Price" class="validation"></span>
@@ -87,21 +89,25 @@
                     <div id="fieldName">
                         Poprzednia cena
                     </div>
-                    <div>
-                        <input asp-for="EarlierPrice" class="priceField" />
+                    <div class="input-box-price">
+                        <span class="prefix">zł</span>
+                        <input asp-for="EarlierPrice" id="input-earlierPrice" autoComplete='none' type="number" min="0" step="0.01"/>
                     </div>
                     <div id="validationfield">
                         <span asp-validation-for="EarlierPrice" class="validation"></span>
                     </div>
                 </div>
-                <div id="fieldName">
-                    Cena dostawy
+                <div class="col">
+                    <div id="fieldName">
+                        <i class="bi bi-truck"></i> Cena dostawy
                     </div>
-                        <div>
-                            <input asp-for="DeliveryPrice" class="deliveryPriceField" />
-                        </div>
+                    <div class="input-box-price">
+                        <span class="prefix">zł</span>
+                        <input asp-for="DeliveryPrice" id="input-deliveryPrice" autoComplete='none' type="number" min="0" step="0.01"/>
+                    </div>
                     <div id="validationfield">
                         <span asp-validation-for="DeliveryPrice" class="validation"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,10 +118,10 @@
             <div class="row" id="detailRow1">
                 <div class="col">
                     <div id="fieldName">
-                        Kategoria
+                        Kategoria <span class="isRequired"> (Obowiązkowe) </span>
                     </div>
                     <div id="selectList">
-                        @Html.DropDownListFor(x => Model.TypeId, new SelectList(Model.TypeSelectList, "Id", "Name"), htmlAttributes:new {@class ="selectList"})
+                        @Html.DropDownListFor(x => Model.TypeId, new SelectList(Model.TypeSelectList, "Id", "Name"), "Wybierz kategorię", htmlAttributes:new {@class ="selectList"})
                     </div>
                     <div id="validationfield">
                         <span asp-validation-for="TypeId" class="validation"></span>
@@ -123,10 +129,13 @@
                 </div>
                 <div class="col">
                     <div id="fieldName">
-                        Sklep
+                        Sklep <span class="isRequired"> (Obowiązkowe) </span>
                     </div>
                     <div id="selectList">
-                        @Html.DropDownListFor(x => Model.ShopId, new SelectList(Model.ShopSelectList, "Id", "Name"), htmlAttributes:new {@class ="selectList"})  
+                        @Html.DropDownListFor(x => Model.ShopId, new SelectList(Model.ShopSelectList, "Id", "Name"), "Wybierz sklep", htmlAttributes:new {@class ="selectList"}) 
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="ShopId" class="validation"></span>
                     </div>
                 </div>
             </div>
@@ -136,7 +145,7 @@
                         Data rozpoczęcia
                     </div>
                     <div id="bargainDate">
-                        <input asp-for="BeginningOfPriceBargain" class="dateField" />
+                        <input asp-for="BeginningOfPriceBargain" class="dateField"/>
                     </div>
                     <div id="validationfield">
                         <span asp-validation-for="BeginningOfPriceBargain" class="validation"></span>
@@ -147,7 +156,7 @@
                         Data zakończenia
                     </div>
                     <div id="bargainDate">
-                        <input asp-for="EndOfPriceBargain" class="dateField" />
+                        <input asp-for="EndOfPriceBargain" class="dateField"/>
                     </div>
                     <div id="validationfield">
                         <span asp-validation-for="EndOfPriceBargain" class="validation"></span>
@@ -173,21 +182,44 @@
              </div>  
          </div>
     </div> 
-
     </form>
 
-</body></html>
-
+</body>
+</html>
 @section Scripts {
-       <script>
-            // Code if you want the name of the file appear on select
-            $(".custom-file-input").on("change", function () {
+    <script>
+            document.querySelector("#input-price").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which < 44 && evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+    </script>
+    <script>
+            document.querySelector("#input-earlierPrice").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which < 44 && evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+    </script>
+    <script>
+            document.querySelector("#input-deliveryPrice").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which < 44 && evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+    </script>
+    <script>
+            // If you want the name of the file appear on select
+                $(".custom-file-input").on("change", function () {
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
-       </script>
-       <script>
-           // Hide provinces list when bargain isn't local
+    </script>
+    <script>
+        // Hide provinces list when bargain isn't local
            function ShowProvinces()
            {
                var provinces = document.getElementById("bargainProvince")
@@ -201,6 +233,6 @@
                    provinces.style.display = "none";
                }
            }
-       </script>
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

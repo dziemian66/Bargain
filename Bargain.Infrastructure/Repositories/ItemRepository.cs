@@ -1,6 +1,7 @@
 ﻿using Bargain.Domain.Interfaces;
 using Bargain.Domain.Model;
 using Bargain.Domain.Model.Addresses;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,8 @@ namespace Bargain.Infrastructure.Repositories
         }
         public Item GetActiveItemById(int id)
         {
-            var item = _context.Items.FirstOrDefault(i => i.Id == id && i.IsActive == true);
+            var item = _context.Items.Include(i => i.Photos).Include(i=>i.Author).Include(i=>i.Province).Include(i=>i.Type).Include(i=>i.Shop)
+                .FirstOrDefault(i => i.Id == id && i.IsActive == true);
             return item;
         }
         public async Task UpdateItem(Item item)
@@ -78,6 +80,10 @@ namespace Bargain.Infrastructure.Repositories
             var types = _context.Types;
             return types;
         }
-
+        public Bargain.Domain.Model.Type GetTypeDetails(int typeid)
+        {
+            var type = _context.Types.FirstOrDefault(t => t.Id == typeid);
+            return type;
+        }
     }
 }

@@ -1,13 +1,12 @@
-﻿using Bargain.Application.ViewModels.Item.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bargain.Application.ViewModels.Item
+namespace Bargain.Application.ViewModels.Item.Interfaces
 {
-    public class ListItemToListVm : IListOfItemsVm
+    internal interface IListOfItemsVm
     {
         public List<ItemToListVm> Items { get; set; }
         public int CurrentPage { get; set; }

@@ -1,0 +1,42 @@
+﻿
+#type-part {
+    border-radius: 10px;
+    height: 60px;
+    max-width: 1000px;
+    background-color: #38234D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#type-icon {
+    height: 32px;
+    width: auto;
+    filter: invert(100%) sepia(16%) saturate(7463%) hue-rotate(222deg) brightness(119%) contrast(115%);
+}
+#type-name {
+    color: white;
+    font-size: 22px;
+}
+
+@media(max-width: 572px) {
+    #type-part {
+        height: 60px;
+    }
+    #type-icon {
+        height: 22px;
+    }
+    #type-name {
+        font-size: 16px;
+    }
+}
+@media(min-width:573px) and (max-width: 768px) {
+    #type-part {
+        height: 60px;
+    }
+        #type-icon {
+        height: 25px;
+    }
+    #type-name {
+        font-size: 18px;
+    }
+}

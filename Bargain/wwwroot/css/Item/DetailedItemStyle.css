@@ -1,0 +1,479 @@
+﻿body {
+    background-color: #E3E3E3;
+}
+body #main {
+    font-family: 'Nunito', sans-serif;
+    color: #38234D;
+}
+#bargain-mainpart {
+    border-radius: 10px;
+    background-color: white;
+}
+#bargaingraphic-part {
+    margin-block: 15px;
+}
+.carousel-item img {
+    width: 420px;
+    height: 460px;
+    max-width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+#fullpage {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: contain;
+    background-repeat: no-repeat no-repeat;
+    background-position: center center;
+    background-color: black;
+}
+
+.carousel-control-next .carousel-control-next-icon {
+    filter: invert(60%);
+    height: 20px;
+    width: 35px;
+}
+.carousel-control-prev .carousel-control-prev-icon {
+    filter: invert(60%);
+    height: 20px;
+    width: 35px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+#bargaingraphic-part {
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+#photo {
+    width: auto;
+    max-height: 600px;
+}
+#bargaingraphic-part img {
+
+}
+#author-part {
+
+}
+#author-text {
+    font-size: 15px;
+    color: #919191;
+}
+#bargainauthor {
+    font-weight: 600;
+    font-size: 17px;
+    color: #6F3F9F;
+}
+
+#bargaintitle-part {
+    display: flex;
+    align-items: end;
+
+}
+
+#bargain-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#price-part {
+    font-family: Rubik;
+}
+
+#barginprice-part {
+
+}
+
+#bargain-bargainprice {
+    color: #6F3F9F;
+    font-size: 32px;
+}
+
+#deliveryprice-part {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#bargain-deliveryprice {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+#earlierprice-part {
+    margin-top: -13px;
+
+}
+
+#bargain-earlierprice {
+    font-size: 26px;
+    color: #919191;
+    text-decoration: line-through;
+}
+
+#bargainrating-part {
+
+}
+
+#bargainrating-base {
+    margin-left: auto;
+    background-color: #38234D;
+    border-radius: 10px;
+    height: 44px;
+    width: 178px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-right: 2px;
+}
+
+#bargainrating-dislike {
+    border-color: white;
+}
+
+#bargainrating-rating {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+#bargainrating-like {
+    border-color: white;
+}
+
+#bargainrating-dislikebutton {
+    background-color: #38234D;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-start-start-radius: 8px;
+    border-end-start-radius: 8px;
+    font-size: 22px;
+    color: white;
+    border-right: 1px solid;
+}
+
+#bargainrating-dislikebutton:hover {
+    color: #FDEDEC;
+    background-color: #6F3F9F;
+}
+
+#bargainrating-likebutton {
+    background-color: #38234D;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-start-end-radius: 8px;
+    border-end-end-radius: 8px;
+    font-size: 22px;
+    color: white;
+    border-left: 1px solid;
+}
+
+#bargainrating-likebutton:hover {
+    color: #EAFAF1;
+    background-color: #6F3F9F;
+}
+
+#localbargain-part {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+
+}
+#bargain-local {
+    font-size: 22px;
+}
+#beginningofpricebargain-part {
+  
+
+}
+#endofpricebargain-part {
+
+
+}
+#beginningofpricebargain-title {
+    font-size: 18px;
+    color: #919191;
+}
+#endofpricebargain-title {
+    font-size: 18px;
+    color: #919191;
+}
+#bargain-beginningofprice {
+    font-size: 22px;
+}
+#bargain-endofprice {
+    font-size: 22px;
+}
+#bargainshop-part {
+    font-size: 15px;
+    color: #919191;
+    max-height: auto;
+
+    display: flex;
+    align-items: end;
+    justify-content: right;
+}
+#bargain-shop {
+    font-size: 14px;
+    color: #919191;
+    text-align: right;
+}
+#bargaindescription-part {
+}
+
+#bargain-bargaindescription {
+
+}
+#bargainlink-part {
+    display: flex;
+    align-items: center;
+}
+
+#link {
+    text-decoration: none;
+}
+
+#link-button {
+    background-color: #38234D;
+    border-radius: 24px;
+    width: 300px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#link-button:hover {
+    background-color: #6F3F9F;
+}
+#link-text {
+    font-size: 22px;
+    color: white;
+}
+#description-partname {
+    font-size: 20px;
+    font-weight: bold;
+}
+#description-part {
+    border-radius: 10px;
+    background-color: white;
+}
+#description {
+    font-size: 17px;    
+}
+@media(min-width: 769px) and (max-width: 1200px) {
+    .carousel-item img {
+        height: 380px;
+    }
+    #bargain-title {
+        font-size: 18px;
+    }
+}
+@media(min-width:573px) and (max-width: 768px) {
+    #bargaingraphic-part {
+        margin-right: auto;
+        min-height: 210px;
+    }
+    #photo {
+        max-height: 200px;
+    }
+    #bargainrating-base {
+        height: 40px;
+        width: 140px;
+    }
+
+    #bargainrating-rating {
+        font-size: 15px;
+    }
+
+    #bargainrating-dislikebutton {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    #bargainrating-likebutton {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    #bargain-title {
+        font-size: 17px;
+    }
+
+    #bargain-bargainprice {
+        font-size: 29px;
+    }
+
+    #bargain-deliveryprice {
+        margin-top: 7px;
+        font-size: 16px;
+    }
+
+    #earlierprice-part {
+        margin-top: -12px;
+    }
+
+    #bargain-earlierprice {
+        font-size: 22px;
+    }
+    #beginningofpricebargain-title {
+        font-size: 14px;
+    }
+    #bargain-beginningofprice {
+        font-size: 17px;
+    }
+    #endofpricebargain-title {
+        font-size: 14px;
+    }
+    #bargain-endofprice {
+        font-size: 17px;
+    }
+    #bargain-local {
+        font-size: 15px;
+    }
+    #author-text {
+        font-size: 13px;
+    }
+
+    #bargainauthor {
+        font-size: 14px;
+    }
+
+    #link-button {
+        width: auto;
+        height: 40px;
+    }
+    #link-text {
+        font-size: 16px;
+    }
+    #bargain-shop {
+        font-size: 12px;
+    }
+    #description-partname {
+        font-size: 16px;
+    }
+
+    #description {
+        font-size: 15px;
+    }
+}
+@media(max-width: 572px) {
+
+    #bargaingraphic-part {
+        margin-right: auto;
+        min-height: 182px;
+    }
+
+    #photo {
+        max-height: 180px;
+    }
+
+    #bargainrating-base {
+        height: 32px;
+        width: 110px;
+    }
+
+    #bargainrating-rating {
+        font-size: 14px;
+    }
+
+    #bargainrating-dislikebutton {
+        width: 30px;
+        height: 32px;
+        font-size: 16px;
+    }
+
+    #bargainrating-likebutton {
+        width: 30px;
+        height: 32px;
+        font-size: 16px;
+    }
+
+    #bargain-title {
+        font-size: 14px;
+    }
+
+    #bargain-bargainprice {
+        font-size: 20px;
+    }
+
+    #bargain-deliveryprice {
+        margin-top: 7px;
+        font-size: 12px;
+    }
+
+    #earlierprice-part {
+        margin-top: -6px;
+    }
+
+    #bargain-earlierprice {
+        font-size: 15px;
+    }
+
+    #beginningofpricebargain-title {
+        font-size: 13px;
+    }
+
+    #bargain-beginningofprice {
+        font-size: 15px;
+    }
+
+    #endofpricebargain-title {
+        font-size: 13px;
+    }
+
+    #bargain-endofprice {
+        font-size: 15px;
+    }
+
+    #bargain-local {
+        font-size: 15px;
+    }
+
+    #author-text {
+        font-size: 12px;
+    }
+
+    #bargainauthor {
+        font-size: 13px;
+    }
+
+    #link-button {
+        width: auto;
+        height: 36px;
+    }
+
+    #link-text {
+        font-size: 15px;
+    }
+
+    #bargain-shop {
+        font-size: 12px;
+    }
+    #description-partname {
+        font-size: 14px;
+    }
+
+    #description {
+        font-size: 13px;
+    }
+}

@@ -1,5 +1,9 @@
-﻿using Bargain.Models;
+﻿using Bargain.Application.Interfaces;
+using Bargain.Application.ViewModels.Item;
+using Bargain.Application.ViewModels.Photo;
+using Bargain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using static System.Net.WebRequestMethods;
 
@@ -8,45 +12,49 @@ namespace Bargain.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IItemService _itemService;
+        private readonly IWebHostEnvironment _environment;
+        public HomeController(ILogger<HomeController> logger, IItemService itemService, IWebHostEnvironment environment)
         {
             _logger = logger;
+            _itemService = itemService;
+            _environment = environment;
         }
         public IActionResult Index()
         {
-            return View();
+            var model = _itemService.GetAllItems(8, 1);
+            return View(model);
         }
-        //public IActionResult ViewListOfNewItems()
-        //{
-        //    return View(Items);
-        //}
+        [HttpPost]
+        public IActionResult Index(int pageSize, int pageNo, string searchString)
+        {
+            if (pageNo < 1) pageNo = 1;
+            if (searchString is null) searchString = String.Empty;
+            var models = _itemService.GetAllItems(pageSize, pageNo);
+            return View(models);
+        }
+        public IActionResult ListOfItemForSingleType(int typeid)
+        {
+            var model = _itemService.GetItemsByType(typeid, 10, 1);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ListOfItemForSingleType(int typeid, int pageSize, int pageNo)
+        {
+            if (pageNo < 1) pageNo = 1;
+            var models = _itemService.GetItemsByType(typeid, pageSize, pageNo);
+            return View(models);
+        }
 
-        //[Route("TopRated")]
-        //public IActionResult ViewListOfTopRatedItems()
-        //{
-        //    var items = Items.Where(i => i.Likes >= 200)
-        //        .OrderByDescending(i => i.Likes);
-        //    return View(items);
-        //}
-
-        //[Route("Home/Details/{id:int?}")]
-        //public IActionResult ViewItemDetails(int id)
-        //{
-        //    var item = Items.FirstOrDefault(i => i.Id == id);
-        //    return View(item);
-        //}
-
+        [HttpGet]
+        public List<TypeToSelectListVm> GetTypes()
+        {
+            var types = _itemService.GetAllTypes();
+            return types;
+        }
         public IActionResult Privacy()
         {
             return View();
-        }
-
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

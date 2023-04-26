@@ -4,74 +4,62 @@ using Bargain.Application.Services;
 using Bargain.Application.ViewModels.Item;
 using Bargain.Application.ViewModels.Photo;
 using Bargain.Domain.Model;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
+using System.Globalization;
 
 namespace Bargain.Web.Controllers
 {
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;
+        private readonly IValidator<NewItemVm> _newItemValid;
         private readonly IPhotoService _photoService;
         private readonly IAddressService _addressesService;
         private readonly IShopService _shopService;
         private readonly IWebHostEnvironment _environment;
-        public ItemController(IItemService itemService, IPhotoService photoService, IAddressService addressesService, IShopService shopService, IWebHostEnvironment environment)
+        public ItemController(IItemService itemService, IValidator<NewItemVm> newItemValid, IPhotoService photoService, IAddressService addressesService, IShopService shopService, IWebHostEnvironment environment)
         {
             _itemService = itemService;
+            _newItemValid = newItemValid;
             _photoService = photoService;
             _addressesService = addressesService;
             _shopService = shopService;
             _environment = environment;
         }
-        
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult DetailedItem(int id)
         {
-            var model = _itemService.GetAllItems(4, 1, "");
+            var model = _itemService.GetDetailedItemById(id);
             return View(model);
         }
-        [HttpPost]
-        public IActionResult Index(int totalPages, int currentPage, string searchString)
-        {
-            if(currentPage < 1) currentPage= 1;
-            if(searchString is null) searchString = String.Empty;
-            var model = _itemService.GetAllItems(totalPages, currentPage, searchString);
-            return View(model);
-        }
-        public IActionResult AllItems()
-        {
-            var model = _itemService.GetAllItems(4, 1, "");
-            return View(model);
-        }
-        [HttpPost]
-        public IActionResult AllItems(int totalPages, int currentPage, string searchString)
-        {
-            if (currentPage < 1) currentPage = 1;
-            if (searchString is null) searchString = String.Empty;
-            var model = _itemService.GetAllItems(totalPages, currentPage, searchString);
-            return View(model);
-        }
-
         [HttpGet]
         public IActionResult AddItem()
         {
             var item = new NewItemVm();
-            item.CountrySelectList = _addressesService.GetAllCountry();
-            item.ProvinceSelectList = _addressesService.GetAllProvinces();
-            item.ShopSelectList = _shopService.GetAllShops();
-            item.TypeSelectList = _itemService.GetAllTypes();
+            GetSelectListForCreateItem(item);
             return View(item);
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> AddItem(NewItemVm item)
         {
-            if(ModelState.IsValid)
+            ValidationResult result = await _newItemValid.ValidateAsync(item);
+            if (!result.IsValid)
             {
-                var id = await _itemService.AddItem(item);
-                ProcessUploadedFile(item, id);
-                return RedirectToAction("Index");
+                result.AddToModelState(this.ModelState);
+                GetSelectListForCreateItem(item);
+            //Re-render the view when validation failed.
+                return View("AddItem", item);
             }
-            return View(item);
+            var id = await _itemService.AddItem(item);
+            ProcessUploadedFile(item, id);
+            //return RedirectToAction("Home/Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -90,6 +78,14 @@ namespace Bargain.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View(item);
+        }
+
+        private void GetSelectListForCreateItem(NewItemVm item)
+        {
+            item.CountrySelectList = _addressesService.GetAllCountry();
+            item.ProvinceSelectList = _addressesService.GetAllProvinces();
+            item.ShopSelectList = _shopService.GetAllShops();
+            item.TypeSelectList = _itemService.GetAllTypes();
         }
 
         private void ProcessUploadedFile(NewItemVm model, int id)
@@ -120,5 +116,18 @@ namespace Bargain.Web.Controllers
             }
         }
 
+    }
+    /// <summary>
+    /// Add model errors for validating properties
+    /// </summary>
+    public static class Extensions
+    {
+        public static void AddToModelState(this ValidationResult result, ModelStateDictionary modelState)
+        {
+            foreach (var error in result.Errors)
+            {
+                modelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
+        }
     }
 }
