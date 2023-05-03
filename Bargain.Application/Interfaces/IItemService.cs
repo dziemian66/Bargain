@@ -15,7 +15,7 @@ namespace Bargain.Application.Interfaces
         ListItemToListForSingleTypeVm GetItemsByType(int typeid, int pageSize, int pageNo);
         DetailedItemVm GetDetailedItemById(int id);
         NewItemVm GetEditItem(int itemId);
-        Task UpdateItem(NewItemVm model);
+        Task<int> UpdateItem(NewItemVm model);
         List<TypeToSelectListVm> GetAllTypes();
     }
 }

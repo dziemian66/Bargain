@@ -33,7 +33,7 @@ namespace Bargain.Application.ViewModels.Item
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Bargain.Domain.Model.Item, ItemToListVm>()
-                .ForMember(s => s.ShortDescription, opt => opt.MapFrom(d => d.Description.Substring(0, 200) + (d.Description.Length > 200 ? "..." : "")))
+                .ForMember(s => s.ShortDescription, opt => opt.MapFrom(d => d.Description.Substring(0, 180) + (d.Description.Length > 180 ? "..." : "")))
                 .ForMember(s => s.Photo, opt => opt.MapFrom(d => d.Photos.FirstOrDefault(p =>p.FileName!=null)))
                 .ForMember(s => s.RatingValue, opt => opt.MapFrom(d => d.Rating.Value))
                 .ForMember(s => s.Shop, opt => opt.MapFrom(d => d.Shop.Name))

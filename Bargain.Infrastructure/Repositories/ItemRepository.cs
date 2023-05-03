@@ -32,25 +32,33 @@ namespace Bargain.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return item.Id;
         }
+        public int AddRatingToItemByItemId(int itemId)
+        {
+            Rating rating = new Rating() { ItemRef = itemId };
+            _context.Ratings.Add(rating);
+            _context.SaveChangesAsync();
+            return rating.Id;
+        }
         public Item GetActiveItemById(int id)
         {
-            var item = _context.Items.Include(i => i.Photos).Include(i=>i.Author).Include(i=>i.Province).Include(i=>i.Type).Include(i=>i.Shop)
+            var item = _context.Items.Include(i => i.Photos).Include(i=>i.Rating).Include(i=>i.Author).Include(i=>i.Province).Include(i=>i.Type).Include(i=>i.Shop)
                 .FirstOrDefault(i => i.Id == id && i.IsActive == true);
             return item;
         }
-        public async Task UpdateItem(Item item)
+        public async Task<int> UpdateItem(Item item)
         {
             _context.Attach(item);
             _context.Entry(item).Property("Name").IsModified = true;
-            _context.Entry(item).Property("Photos").IsModified = true;
             _context.Entry(item).Property("Description").IsModified = true;
             _context.Entry(item).Property("Price").IsModified= true;
             _context.Entry(item).Property("EarlierPrice").IsModified= true;
+            _context.Entry(item).Property("DeliveryPrice").IsModified = true;
             _context.Entry(item).Property("TypeId").IsModified= true;
             _context.Entry(item).Property("ShopId").IsModified= true;
             _context.Entry(item).Property("LocalBargain").IsModified= true;
             _context.Entry(item).Property("ProvinceId").IsModified= true;
             await _context.SaveChangesAsync();
+            return item.Id;
         }
         public IQueryable<Item> GetActiveItemsByTypeId(int typeId)
         {

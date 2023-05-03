@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bargain.Infrastructure.Repositories
 {
-    public class PhotoRepository:IPhotoRepository
+    public class PhotoRepository : IPhotoRepository
     {
         readonly Context _context;
         public PhotoRepository(Context context)
@@ -21,6 +21,18 @@ namespace Bargain.Infrastructure.Repositories
             _context.Add(photo);
             _context.SaveChanges();
             return photo.Id;
+        }
+        public void DeletePhotosByItemId(int itemId)
+        {
+            var photos = _context.Photos.Where(x => x.ItemId == itemId).ToList();
+            if (photos != null)
+            {
+                foreach (var photo in photos)
+                {
+                    _context.Photos.Remove(photo);
+                    _context.SaveChanges();
+                }
+            }
         }
     }
 }

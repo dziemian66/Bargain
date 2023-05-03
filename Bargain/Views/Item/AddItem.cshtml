@@ -1,7 +1,6 @@
 ﻿@model Bargain.Application.ViewModels.Item.NewItemVm
 @{
     ViewData["Title"] = "Stwórz okazję";
-    string test;
 }
 <html lang="pl">
 <head>
@@ -55,17 +54,51 @@
             </div>
             <div id="bargainGraphic">
                 <div id="biggerFieldName">
-                    Galeria obrazków<span class="isRequired"> (Obowiązkowe) </span>
+                    Galeria obrazków<span class="isRequired"> (Dodaj od 1 do 6 plików) </span>
                 </div>
-                <div id="commend">
+                <div id="graphic-commend">
                     Pierwszy obrazek będzie obrazkiem głównym
                 </div>
                 <div id="fileField">
-                    <input asp-for="Files" accept="image/jpg, image/jpeg, image/png" id="custom-file-input" />
+                    <input asp-for="Files" accept="image/jpg, image/jpeg, image/png, image/webp" id="custom-file-input" onchange="readURL(event)"/>
                 </div>
                 <div id="validationfield">
                      <span asp-validation-for="Files" class="validation"></span>
                 </div>
+                <div class="row ms-2" id="uploadedimg-part">
+                    <div class="col-auto px-2">
+                        <div  id="main-uploadedimg-box">
+                            <img class="uploadedimg" id="main-uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                </div>
+                
+
             </div>
         </div>
         <div id="pricePart">
@@ -187,6 +220,18 @@
 </body>
 </html>
 @section Scripts {
+    <script>
+        function readURL(event) {
+            var images = document.getElementsByClassName("uploadedimg");
+                for (var i = 0; i < images.length; i++) {
+                    images[i].setAttribute("src", "");
+                }
+                for (var i = 0; i < images.length; i++) {
+                    var url = URL.createObjectURL(event.target.files[i]);
+                    images[i].setAttribute("src",url);
+                }
+            };
+    </script>
     <script>
             document.querySelector("#input-price").addEventListener("keypress", function (evt) {
                 if (evt.which != 8 && evt.which < 44 && evt.which > 57)

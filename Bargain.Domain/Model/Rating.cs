@@ -6,6 +6,7 @@
         public int Value { get; set; } = 0;
         public int ItemRef { get; set; }
         public Item Item { get; set; }
-        public ICollection<UserRating> UserRatings { get; set; }
+        public ICollection<UserRatingLike> UserRatingLikes { get; set; }
+        public ICollection<UserRatingDislike> UserRatingDislikes { get; set; }
     }
 }

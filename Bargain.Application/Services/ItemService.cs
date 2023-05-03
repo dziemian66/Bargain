@@ -2,8 +2,8 @@
 using AutoMapper.QueryableExtensions;
 using Bargain.Application.Interfaces;
 using Bargain.Application.Mapping;
+using Bargain.Application.ViewModels.Interfaces;
 using Bargain.Application.ViewModels.Item;
-using Bargain.Application.ViewModels.Item.Interfaces;
 using Bargain.Domain.Interfaces;
 using Bargain.Domain.Model;
 using System;
@@ -18,10 +18,12 @@ namespace Bargain.Application.Services
     {
         private readonly IItemRepository _itemRepository;
         private readonly IMapper _mapper;
-        public ItemService(IItemRepository itemRepository, IMapper mapper)
+        private readonly IShopService _shopService;
+        public ItemService(IItemRepository itemRepository, IMapper mapper, IShopService shopService)
         {
             _itemRepository = itemRepository;
             _mapper = mapper;
+            _shopService = shopService;
         }
         private IListOfItemsVm AddPaginationToListOfItem(IListOfItemsVm itemListVm, List<ItemToListVm> items, int pageSize, int pageNo)
         {
@@ -34,9 +36,14 @@ namespace Bargain.Application.Services
         public async Task<int> AddItem(NewItemVm item, int authorId = 1)
         {
             var itm = _mapper.Map<Item>(item);
+            if(itm.Url == null) {
+                itm.Url = _shopService.GetShopUrlById(itm.ShopId);
+            }
             itm.IsActive = true;
             itm.AuthorId = authorId; //Zostanie pobrane na podstawie zalogowanego użytkownika
-            var id = await _itemRepository.AddItem(itm); 
+            itm.CreationDate= DateTime.Now;
+            var id = await _itemRepository.AddItem(itm);
+            _itemRepository.AddRatingToItemByItemId(id);
             return id;
         }
 
@@ -70,10 +77,15 @@ namespace Bargain.Application.Services
             var itemVm = _mapper.Map<NewItemVm>(item);
             return itemVm;
         }
-        public async Task UpdateItem(NewItemVm model)
+        public async Task<int> UpdateItem(NewItemVm model)
         {
             var item = _mapper.Map<Item>(model);
-            await _itemRepository.UpdateItem(item);
+            if (item.Url == null)
+            {
+                item.Url = _shopService.GetShopUrlById(item.ShopId);
+            }
+            var id = await _itemRepository.UpdateItem(item);
+            return id;
         }
         public List<TypeToSelectListVm> GetAllTypes()
         {

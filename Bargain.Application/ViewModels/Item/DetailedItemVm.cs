@@ -23,6 +23,7 @@ namespace Bargain.Application.ViewModels.Item
         public decimal? EarlierPrice { get; set; }
         [DataType(DataType.Currency)]
         public decimal? DeliveryPrice { get; set; }
+        public int RatingValue { get; set; }
         public string TypeName { get; set; }
         public string AuthorName { get; set; }
         public string Url { get; set; }
@@ -36,6 +37,7 @@ namespace Bargain.Application.ViewModels.Item
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Bargain.Domain.Model.Item, DetailedItemVm>()
+                .ForMember(s => s.RatingValue, opt => opt.MapFrom(d => d.Rating.Value))
                 .ForMember(s => s.TypeName, opt => opt.MapFrom(d => d.Type.Name))
                 .ForMember(s => s.AuthorName, opt => opt.MapFrom(d => d.Author.Name))
                 .ForMember(s => s.ShopName, opt => opt.MapFrom(d => d.Shop.Name))

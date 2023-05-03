@@ -10,5 +10,6 @@ namespace Bargain.Application.Interfaces
     public interface IShopService
     {
         public List<ShopToSelectListVm> GetAllShops();
+        public string GetShopUrlById(int shopId);
     }
 }

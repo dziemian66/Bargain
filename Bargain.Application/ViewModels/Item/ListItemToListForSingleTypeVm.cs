@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Bargain.Application.Mapping;
-using Bargain.Application.ViewModels.Item.Interfaces;
+using Bargain.Application.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

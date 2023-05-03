@@ -11,10 +11,14 @@ namespace Bargain.Domain.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public Photo? Photo { get; set; }
         public string? Description { get; set; }
         public Address Address { get; set; }
+        public virtual ICollection<Photo> UploadedPhotos { get; set; }
         public virtual ICollection<Item> AddedItems { get; set; }
-        public ICollection<UserRating> UserRatings { get; set; }
+        public ICollection<UserRatingLike> UserRatingLikes { get; set; }
+        public ICollection<UserRatingDislike> UserRatingDislikes { get; set; }
+        public DateTime? CreationDate { get; set; }
         public bool IsActive { get; set; }
     }
 }

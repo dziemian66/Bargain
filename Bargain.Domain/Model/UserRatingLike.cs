@@ -1,6 +1,6 @@
 ﻿namespace Bargain.Domain.Model
 {
-    public class UserRating
+    public class UserRatingLike
     {
         public int UserId { get; set; }
         public User User { get; set; }

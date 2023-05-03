@@ -7,7 +7,7 @@ body .bargain-part {
 }
 .bargain-part {
     border-radius: 10px;
-    max-height: 300px;
+    height: 200px;
     max-width: 1000px;
     background-color: #FAFAFA;
 }
@@ -19,17 +19,19 @@ body .bargain-part {
     color: #8439CE;
 }
 .bargaingraphic-part {
-    max-height: 120px;
+    margin-top: 7px;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .bargaingraphic-part img{
     border-radius: 8px;
-    height: auto;
-    width: auto;
-    max-width: 170px;
+    max-width: 200px;
     max-height: 170px;
 }
 .bargaingraphic-part img:hover {
-    transform: scale(1.1);
+    transform: scale(1.04);
 }
 
 .bargainshop-part {
@@ -140,10 +142,12 @@ body .bargain-part {
 }
 .bargain-bargaindescription {
     font-size: 13px;
+    hyphens: auto;
 }
 .bargainlink-part {
-    align-items: center;
-    justify-content: right;
+    position: absolute;
+    bottom: -12px;
+    right: 2px;
 }
 .link {
     text-decoration: none;
@@ -191,7 +195,14 @@ body .bargain-part {
         color: #919191;
         text-align: right;
     }
+    .bargain-part {
+        height: auto;
+    }
 
+    .bargaingraphic-part {
+        height: 80px;
+        margin-top: 4px;
+    }
     .bargaingraphic-part img {
         height: auto;
         width: auto;
@@ -228,7 +239,7 @@ body .bargain-part {
         height: 32px;
         width: 110px;
         margin-left: 4px;
-        margin-right: -60px;
+        margin-right: -80px;
     }
 
     .bargainrating-rating {
@@ -252,13 +263,16 @@ body .bargain-part {
 
     .bargaindescription-part {
         line-height: 1.2;
-        height: 50px;
+        height: auto;
     }
 
     .bargain-bargaindescription {
         font-size: 12px;
     }
-
+    .bargainlink-part-bottom {
+        align-items: center;
+    
+    }
     .link-button {
         width: auto;
         margin-right: 6px;
@@ -274,6 +288,13 @@ body .bargain-part {
         font-size: 12px;
         color: #919191;
         text-align: right;
+    }
+    .bargain-part {
+        height: auto;
+    }
+    .bargaingraphic-part {
+        height: 100px;
+        margin-top: 10px;
     }
     .bargaingraphic-part img {
         height: auto;
@@ -299,12 +320,37 @@ body .bargain-part {
     .earlierprice-part {
         margin-top: -8px;
     }
+    .bargainrating-base {
+        height: 32px;
+        width: 110px;
+        margin-left: 4px;
+        margin-right: -26px;
+    }
+
+    .bargainrating-rating {
+        font-size: 12px;
+    }
+
+    .bargainrating-dislikebutton {
+        width: 32px;
+        height: 32px;
+        font-size: 17px;
+    }
+    .bargainrating-dislikebutton:hover {
+        color: #FDEDEC;
+        background-color: #59347E;
+    }
+    .bargainrating-likebutton {
+        width: 32px;
+        height: 32px;
+        font-size: 17px;
+    }
     .bargain-earlierprice {
         font-size: 15px;
     }
     .bargaindescription-part {
         line-height: 1.2;
-        height: 50px;
+        height: auto;
     }
     .bargain-bargaindescription {
         font-size: 12px;
@@ -312,6 +358,30 @@ body .bargain-part {
     .link-button {
         width: auto;
         margin-right: 6px;
+    }
+}
+@media(min-width:769px) and (max-width: 990px) {
+    .bargain-part {
+        height: 220px;
+    }
+    .bargaingraphic-part {
+        height: 170px;
+        margin-top: 8px;
+    }
+    .bargaingraphic-part img{
+        max-width: 140px;
+        max-height: 160px;
+    }
+    .bargainlink-part {
+        position: absolute;
+        bottom: -32px;
+        right: 2px;
+    }
+    .bargain-title {
+        font-size: 15px;
+    }
+    .bargain-bargaindescription {
+        font-size: 13px;
     }
 }
 

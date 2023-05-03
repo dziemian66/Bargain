@@ -26,5 +26,10 @@ namespace Bargain.Application.Services
                 .ProjectTo<ShopToSelectListVm>(_mapper.ConfigurationProvider).ToList();
             return shops;
         }
+        public string GetShopUrlById(int shopId)
+        {
+            var shopUrl = _shopRepository.GetShopById(shopId).Url;
+            return shopUrl;
+        }
     }
 }

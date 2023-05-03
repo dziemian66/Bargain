@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bargain.Application.ViewModels.Item;
 
-namespace Bargain.Application.ViewModels.Item.Interfaces
+namespace Bargain.Application.ViewModels.Interfaces
 {
     internal interface IListOfItemsVm
     {

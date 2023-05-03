@@ -17,9 +17,9 @@
         {
             <div class="container my-3 bargain-part">
                 <div class="row g-1 g-sm-2">
-                        <div class="col-3 col-md-3">
-                        <div class="bargaingraphic-part my-2 mx-0">
-                            <a asp-controller="Item" asp-action="DetailedItem" asp-route-id="@item.Id" class="detailed-item-link">
+                    <div class="col-3 col-md-3">
+                        <div class="bargaingraphic-part mx-0">
+                            <a asp-controller="Item" asp-action="DetailedItem" asp-route-id="@item.Id">
                                 <img src="~/Uploads/@item.Photo.FileName" class="d-block mx-auto" asp-append-version="true"/>
                             </a>
                         </div>
@@ -38,7 +38,7 @@
                             </span>
                              </div>
                         <div class="row">
-                            <div class="col-7 col-md-8 my-1 price-part row">
+                                <div class="col-7 col-sm-8 my-1 price-part row">
                                 <div class="col-auto barginprice-part">
                                     <span class=" bargain-bargainprice">
                                         @Html.DisplayFor(modelItem => item.Price)
@@ -73,18 +73,18 @@
                                     </div>
                                 }
                             </div>
-                            <div class="col-3 col-sm-5 col-md-4 my-1 bargainrating-part">
+                            <div class="col-3 col-sm-4 mt-2 mb-1 bargainrating-part">
                                  <div class="row bargainrating-base">
                                     <div class="col-3 bargainrating-dislike p-0">
-                                        <button class="bargainrating-dislikebutton">
+                                        <button class="bargainrating-dislikebutton" title="To mi się nie podoba">
                                             <i class="bi bi-hand-thumbs-down"></i>
                                         </button>
                                     </div>
                                     <div class="col-6 bargainrating-rating">
-                                        176
+                                        @Html.DisplayFor(modelItem => item.RatingValue)
                                     </div>
                                     <div class="col-3 bargainrating-like p-0">
-                                        <button class="bargainrating-likebutton">
+                                        <button class="bargainrating-likebutton" title="To mi się podoba">
                                             <i class="bi bi-hand-thumbs-up"></i>
                                         </button>
                                     </div>
@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="col-12 m-1 my-2 d-md-none bargainlink-part">
+                        <div class="col-12 m-1 my-2 d-md-none bargainlink-part-bottom">
                         <a href="@item.Url" style="text-decoration:none" target="_blank">
                             <div class="link-button p-1">
                                 <span class="link-text">

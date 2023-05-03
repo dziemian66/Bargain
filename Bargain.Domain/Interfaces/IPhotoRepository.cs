@@ -10,5 +10,6 @@ namespace Bargain.Domain.Interfaces
     public interface IPhotoRepository
     {
         public int AddPhoto(Photo photo);
+        public void DeletePhotosByItemId(int itemId);
     }
 }

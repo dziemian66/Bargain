@@ -99,6 +99,9 @@ namespace Bargain.Infrastructure.Migrations
                     b.Property<DateTime?>("BeginningOfPriceBargain")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal?>("DeliveryPrice")
                         .HasPrecision(4, 2)
                         .HasColumnType("decimal(4,2)");
@@ -165,12 +168,38 @@ namespace Bargain.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ItemId")
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ShopRef")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UploaderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserRef")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ItemId");
+
+                    b.HasIndex("ShopRef")
+                        .IsUnique()
+                        .HasFilter("[ShopRef] IS NOT NULL");
+
+                    b.HasIndex("UploaderId");
+
+                    b.HasIndex("UserRef")
+                        .IsUnique()
+                        .HasFilter("[UserRef] IS NOT NULL");
 
                     b.ToTable("Photos");
                 });
@@ -251,6 +280,9 @@ namespace Bargain.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -266,7 +298,7 @@ namespace Bargain.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Bargain.Domain.Model.UserRating", b =>
+            modelBuilder.Entity("Bargain.Domain.Model.UserRatingDislike", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -278,7 +310,22 @@ namespace Bargain.Infrastructure.Migrations
 
                     b.HasIndex("RatingId");
 
-                    b.ToTable("UserRating");
+                    b.ToTable("UserRatingDislike");
+                });
+
+            modelBuilder.Entity("Bargain.Domain.Model.UserRatingLike", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RatingId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "RatingId");
+
+                    b.HasIndex("RatingId");
+
+                    b.ToTable("UserRatingLike");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -550,11 +597,27 @@ namespace Bargain.Infrastructure.Migrations
                 {
                     b.HasOne("Bargain.Domain.Model.Item", "Item")
                         .WithMany("Photos")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ItemId");
+
+                    b.HasOne("Bargain.Domain.Model.Shop", "Shop")
+                        .WithOne("Photo")
+                        .HasForeignKey("Bargain.Domain.Model.Photo", "ShopRef");
+
+                    b.HasOne("Bargain.Domain.Model.User", "Uploader")
+                        .WithMany("UploadedPhotos")
+                        .HasForeignKey("UploaderId");
+
+                    b.HasOne("Bargain.Domain.Model.User", "User")
+                        .WithOne("Photo")
+                        .HasForeignKey("Bargain.Domain.Model.Photo", "UserRef");
 
                     b.Navigation("Item");
+
+                    b.Navigation("Shop");
+
+                    b.Navigation("Uploader");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Rating", b =>
@@ -568,15 +631,32 @@ namespace Bargain.Infrastructure.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("Bargain.Domain.Model.UserRating", b =>
+            modelBuilder.Entity("Bargain.Domain.Model.UserRatingDislike", b =>
                 {
                     b.HasOne("Bargain.Domain.Model.Rating", "Rating")
-                        .WithMany("UserRatings")
+                        .WithMany("UserRatingDislikes")
                         .HasForeignKey("RatingId")
                         .IsRequired();
 
                     b.HasOne("Bargain.Domain.Model.User", "User")
-                        .WithMany("UserRatings")
+                        .WithMany("UserRatingDislikes")
+                        .HasForeignKey("UserId")
+                        .IsRequired();
+
+                    b.Navigation("Rating");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bargain.Domain.Model.UserRatingLike", b =>
+                {
+                    b.HasOne("Bargain.Domain.Model.Rating", "Rating")
+                        .WithMany("UserRatingLikes")
+                        .HasForeignKey("RatingId")
+                        .IsRequired();
+
+                    b.HasOne("Bargain.Domain.Model.User", "User")
+                        .WithMany("UserRatingLikes")
                         .HasForeignKey("UserId")
                         .IsRequired();
 
@@ -657,12 +737,16 @@ namespace Bargain.Infrastructure.Migrations
 
             modelBuilder.Entity("Bargain.Domain.Model.Rating", b =>
                 {
-                    b.Navigation("UserRatings");
+                    b.Navigation("UserRatingDislikes");
+
+                    b.Navigation("UserRatingLikes");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Shop", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("Photo");
                 });
 
             modelBuilder.Entity("Bargain.Domain.Model.Type", b =>
@@ -677,7 +761,13 @@ namespace Bargain.Infrastructure.Migrations
                     b.Navigation("Address")
                         .IsRequired();
 
-                    b.Navigation("UserRatings");
+                    b.Navigation("Photo");
+
+                    b.Navigation("UploadedPhotos");
+
+                    b.Navigation("UserRatingDislikes");
+
+                    b.Navigation("UserRatingLikes");
                 });
 #pragma warning restore 612, 618
         }

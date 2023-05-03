@@ -45,13 +45,6 @@ namespace Bargain.Controllers
             var models = _itemService.GetItemsByType(typeid, pageSize, pageNo);
             return View(models);
         }
-
-        [HttpGet]
-        public List<TypeToSelectListVm> GetTypes()
-        {
-            var types = _itemService.GetAllTypes();
-            return types;
-        }
         public IActionResult Privacy()
         {
             return View();

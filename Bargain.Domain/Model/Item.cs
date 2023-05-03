@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace Bargain.Domain.Model
         public bool LocalBargain { get; set; }
         public int? ProvinceId { get; set; }
         public virtual Province? Province { get; set; }
+        public DateTime? CreationDate { get; set; }
         public DateTime? EndOfPriceBargain { get; set; }
         public DateTime? BeginningOfPriceBargain { get; set; }
         public bool IsActive { get; set; }

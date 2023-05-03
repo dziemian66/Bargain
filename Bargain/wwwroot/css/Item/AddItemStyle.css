@@ -3,6 +3,11 @@
     color: #38234D;
     font-family: 'Nunito', sans-serif;
 }
+.displays-in-the-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .isRequired {
     color: #6B6B6B;
     font-size: 13px;
@@ -180,7 +185,7 @@
     color: #38234D;
     font-weight: bold;
 }
-#commend {
+#graphic-commend {
     margin-left: 16px;
     margin-bottom: 6px;
     font-size: 14px;
@@ -214,12 +219,45 @@
     margin-left: 22px;
     margin-right: 22px;
 }
+#uploadedimg-part {
+    margin-top: 20px;
+}
+#main-uploadedimg-box {
+    height: 150px;
+    width: 150px;
+    border: 3px solid #38234D;
+    background-color: #F1F1F1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#main-uploadedimg {
+    max-height: 140px;
+    max-width: 140px;
+    border-radius: 8px;
+}
+.uploadedimg-box {
+    height: 150px;
+    width: 150px;
+    border: 3px solid #999;
+    background-color: #F1F1F1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.uploadedimg {
+    max-height: 140px;
+    max-width: 140px;
+    border-radius: 8px;
+}
+
 #fileField {
     margin-bottom: 5px;
     margin-left: 20px;
     font-size: 13px;
     color: #38234D;
-    
 }
 #pricePart {
     margin-top: 16px;
@@ -229,7 +267,7 @@
 }
 #bargainPrice {
     margin-bottom: 40px;
-    margin-left: 50px;
+    margin-left: 20px;
     margin-right: 50px;
 }
 #detailPart {

@@ -37,22 +37,12 @@ builder.Services.AddControllersWithViews();
 //Add Manual Fluent Validation for NewItemValidation
 builder.Services.AddValidatorsFromAssemblyContaining<NewItemValidation>();
 
-//Add Manual Fluent Validation
-//builder.Services.AddFluentValidation(conf =>
-//{
-//    conf.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
-//    conf.AutomaticValidationEnabled = false;
-//});
-
 //Use Polish culture to website
 var cultureInfo = new CultureInfo("pl-PL");
 cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 
 var app = builder.Build();
-
-//TEST culture
-app.UseRequestLocalization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

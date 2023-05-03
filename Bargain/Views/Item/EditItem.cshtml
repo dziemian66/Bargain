@@ -1,0 +1,284 @@
+﻿@model Bargain.Application.ViewModels.Item.NewItemVm
+@{
+    ViewData["Title"] = "Stwórz okazję";
+    string test;
+}
+<html lang="pl">
+<head>
+    <link href="@Url.Content("~/css/Item/AddItemStyle.css")" rel="stylesheet" type="text/css"/> 
+</head>
+
+<body>
+    <h1><b><font>Edytuj okazję</font></b></h1>
+  <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="EditItem" enctype="multipart/form-data">
+    <div class="container my-4" id="main" >
+        <div  id="basicInfoPart">
+            <div>
+                <input asp-for="Id" type="hidden" />
+            </div>
+            <div id="partName">
+                Podstawowe informacje
+            </div>
+            <div id="bagrainName">
+                <div id="fieldName">
+                    Tytuł  <span class="isRequired"> (Obowiązkowe) </span>
+                </div>
+                <div>
+                    <input asp-for="Name" class="nameField" autoComplete='none' placeholder="Nazwij swoją okazję np. poprzez nazwę marki i modelu"/>     
+                </div>
+                <div id="validationfield">
+                    <span asp-validation-for="Name" class="validation"></span>
+                </div>
+            </div>
+            <div id="bagrainUrl">
+                <div id="fieldName">
+                   Link
+                </div>
+                <div>
+                    <input asp-for="Url" class="linkField" autoComplete='none' placeholder="Wklej link do okazji https://www.LinkDoOkazji.pl"/>
+                </div>
+                <div id="validationfield">
+                     <span asp-validation-for="Url" class="validation"></span>
+                </div>
+            </div>
+            <div id="bargainDescription">
+                <div id="fieldName">
+                   Opis <span class="isRequired"> (Obowiązkowe) </span>
+                </div>
+                <div>
+                    <textarea asp-for="Description" class="description" placeholder="Opis powinien zawierać od 50 do 800 znaków"></textarea>  
+                </div>
+                <div id="validationfield">
+                    <span asp-validation-for="Description" class="validation"></span>
+                </div>
+            </div>
+            <div id="bargainGraphic">
+                <div id="biggerFieldName">
+                    Galeria obrazków<span class="isRequired"> (Dodaj od 1 do 6 plików) </span>
+                </div>
+                <div id="graphic-commend">
+                    Pierwszy obrazek będzie obrazkiem głównym
+                </div>
+                <div id="fileField">
+                    <input asp-for="Files" accept="image/jpg, image/jpeg, image/png" id="custom-file-input" onchange="readURL(event)"/>
+                </div>
+                <div id="validationfield">
+                     <span asp-validation-for="Files" class="validation"></span>
+                </div>
+                <div class="row ms-2" id="uploadedimg-part">
+                    <div class="col-auto px-2">
+                        <div  id="main-uploadedimg-box">
+                            <img class="uploadedimg" id="main-uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                    <div class="col-auto px-2 displays-in-the-center">
+                        <div class="uploadedimg-box">
+                            <img class="uploadedimg"/>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+        <div id="pricePart">
+            <div id="partName">
+                Cena
+            </div>
+            <div class="row" id="bargainPrice">
+                <div class="col">
+                    <div id="fieldName">
+                        Cena promocji <span class="isRequired"> (Obowiązkowe) </span>
+                    </div>
+                    <div class="input-box-price">
+                        <span class="prefix">zł</span>
+                        <input asp-for="Price" id="input-price" autoComplete='none' type="number" min="0" step="0.01"/>
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="Price" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        Poprzednia cena
+                    </div>
+                    <div class="input-box-price">
+                        <span class="prefix">zł</span>
+                        <input asp-for="EarlierPrice" id="input-earlierPrice" autoComplete='none' type="number" min="0" step="0.01"/>
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="EarlierPrice" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        <i class="bi bi-truck"></i> Cena dostawy
+                    </div>
+                    <div class="input-box-price">
+                        <span class="prefix">zł</span>
+                        <input asp-for="DeliveryPrice" id="input-deliveryPrice" autoComplete='none' type="number" min="0" step="0.01"/>
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="DeliveryPrice" class="validation"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="detailPart">
+            <div id="partName"> 
+                Szczegółowe informacje
+            </div>
+            <div class="row" id="detailRow1">
+                <div class="col">
+                    <div id="fieldName">
+                        Kategoria <span class="isRequired"> (Obowiązkowe) </span>
+                    </div>
+                    <div id="selectList">
+                        @Html.DropDownListFor(x => Model.TypeId, new SelectList(Model.TypeSelectList, "Id", "Name"), "Wybierz kategorię", htmlAttributes:new {@class ="selectList"})
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="TypeId" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        Sklep <span class="isRequired"> (Obowiązkowe) </span>
+                    </div>
+                    <div id="selectList">
+                        @Html.DropDownListFor(x => Model.ShopId, new SelectList(Model.ShopSelectList, "Id", "Name"), "Wybierz sklep", htmlAttributes:new {@class ="selectList"}) 
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="ShopId" class="validation"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="detailRow2">
+                <div class="col">
+                    <div id="fieldName">
+                        Data rozpoczęcia
+                    </div>
+                    <div id="bargainDate">
+                        <input asp-for="BeginningOfPriceBargain" class="dateField"/>
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="BeginningOfPriceBargain" class="validation"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="fieldName">
+                        Data zakończenia
+                    </div>
+                    <div id="bargainDate">
+                        <input asp-for="EndOfPriceBargain" class="dateField"/>
+                    </div>
+                    <div id="validationfield">
+                        <span asp-validation-for="EndOfPriceBargain" class="validation"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="detailRow3">
+                <div id="bargainIsLocal">
+                        <input class="checkbox" id="isLocalCheck" asp-for="LocalBargain" onclick="ShowProvinces()"/> Okazja lokalna
+                </div>
+                <div id="bargainProvince">
+                    @Html.DropDownListFor(x => Model.ProvinceId, new SelectList(Model.ProvinceSelectList, "Id", "Name"),"Wybierz lokalizację" , htmlAttributes:new {@class ="selectList"})
+                    <div id="validationfield">
+                        <span asp-validation-for="ProvinceId" class="validation"></span>
+                    </div>
+                </div>
+            </div>
+         </div>  
+         <div id="createPart" >
+             <div id="bargainCreate" class="col">
+                 <input type="submit" value="Stwórz okazję" class="createButton" />
+             </div>  
+         </div>
+    </div> 
+    </form>
+
+</body>
+</html>
+@section Scripts {
+    <script>
+        function readURL(event) {
+            var images = document.getElementsByClassName("uploadedimg");
+                for (var i = 0; i < images.length; i++) {
+                    images[i].setAttribute("src", "");
+                }
+                for (var i = 0; i < images.length; i++) {
+                    var url = URL.createObjectURL(event.target.files[i]);
+                    images[i].setAttribute("src",url);
+                }
+            };
+    </script>
+    <script>
+            document.querySelector("#input-price").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which < 44 && evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+    </script>
+    <script>
+            document.querySelector("#input-earlierPrice").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which < 44 && evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+    </script>
+    <script>
+            document.querySelector("#input-deliveryPrice").addEventListener("keypress", function (evt) {
+                if (evt.which != 8 && evt.which < 44 && evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+    </script>
+    <script>
+            // If you want the name of the file appear on select
+                $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
+    </script>
+    <script>
+        // Hide provinces list when bargain isn't local
+           function ShowProvinces()
+           {
+               var provinces = document.getElementById("bargainProvince")
+               var isLocal = document.getElementById("isLocalCheck")
+               if(isLocal.checked == true)
+               {
+                   provinces.style.display = "block";
+               }
+               else
+               {
+                   provinces.style.display = "none";
+               }
+           }
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

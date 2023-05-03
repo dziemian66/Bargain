@@ -1,6 +1,7 @@
 ﻿using Bargain.Application;
 using Bargain.Application.Interfaces;
 using Bargain.Application.Services;
+using Bargain.Application.ViewModels.Interfaces;
 using Bargain.Application.ViewModels.Item;
 using Bargain.Application.ViewModels.Photo;
 using Bargain.Domain.Model;
@@ -56,9 +57,8 @@ namespace Bargain.Web.Controllers
             //Re-render the view when validation failed.
                 return View("AddItem", item);
             }
-            var id = await _itemService.AddItem(item);
-            ProcessUploadedFile(item, id);
-            //return RedirectToAction("Home/Index");
+            var itemId = await _itemService.AddItem(item);
+            await _photoService.UploadPhotoCollectionForItem(item, _environment.WebRootPath, itemId);
             return RedirectToAction("Index", "Home");
         }
 
@@ -66,54 +66,36 @@ namespace Bargain.Web.Controllers
         public IActionResult EditItem(int id)
         {
             var item = _itemService.GetEditItem(id);
+            GetSelectListForCreateItem(item);
             return View(item);
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> EditItem(NewItemVm item)
         {
-            if(ModelState.IsValid)
+            ValidationResult result = await _newItemValid.ValidateAsync(item);
+            if (!result.IsValid)
             {
-                await _itemService.UpdateItem(item);
-                return RedirectToAction("Index");
+                result.AddToModelState(this.ModelState);
+                GetSelectListForCreateItem(item);
+                return View(item);
             }
-            return View(item);
+            var itemId = await _itemService.UpdateItem(item);
+            _photoService.DeletePhotosByItemId(itemId); // Delete every photos before you upload new
+            await _photoService.UploadPhotoCollectionForItem(item, _environment.WebRootPath, itemId);  
+            return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Add list of shops, provinces and types to select when you create or edit item
+        /// </summary>
+        /// <param name="item"></param>
         private void GetSelectListForCreateItem(NewItemVm item)
         {
             item.CountrySelectList = _addressesService.GetAllCountry();
             item.ProvinceSelectList = _addressesService.GetAllProvinces();
             item.ShopSelectList = _shopService.GetAllShops();
             item.TypeSelectList = _itemService.GetAllTypes();
-        }
-
-        private void ProcessUploadedFile(NewItemVm model, int id)
-        {
-            string uniqueName = null;
-            string path = Path.Combine(_environment.WebRootPath, "Uploads");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            if (model.Files != null)
-            {
-                foreach (var file in model.Files)
-                {
-                    NewPhotoVm newPhoto = new NewPhotoVm();
-                    string uploadsFolder = Path.Combine(_environment.WebRootPath, "Uploads");
-                    uniqueName = Guid.NewGuid().ToString()+ "_" +file.FileName.ToString();
-                    newPhoto.FileName = uniqueName;
-                    newPhoto.ItemId = id;
-                    _photoService.AddPhoto(newPhoto);
-                    string filePath = Path.Combine(uploadsFolder, uniqueName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                }   
-            }
         }
 
     }
